@@ -139,6 +139,7 @@ result = max_profit([7, 6, 4, 3, 1])
 print(f"Maximum profit: {result}")
 # ==================================
 # [1, 10, 3, 11, 3]
+
 def max_profit(prices):
     """
     Calculates maximum profit from a single buy-sell transaction.
@@ -198,4 +199,69 @@ def max_profit(prices):
 
 # ✅ Call with your input
 result = max_profit([1, 10, 3, 11, 3])
+print(f"Maximum profit: {result}")
+# ==============================
+# [3, 5, 10, 2, 5, 10, 1]
+def max_profit(prices):
+    """
+    Calculates maximum profit from a single buy-sell transaction.
+    Returns 0 if no profit is possible.
+    """
+
+    if not prices or len(prices) < 2:
+        return 0  # Need at least two prices for a transaction
+
+    min_price = prices[0]  # Best price to buy so far
+    max_profit = 0  # Best profit seen so far
+
+    for i in range(1, len(prices)):
+        price = prices[i]
+
+        # Calculate potential profit if we sold today
+        potential_profit = price - min_price
+
+        # Update max_profit if today’s potential profit is better
+        if potential_profit > max_profit:
+            max_profit = potential_profit
+
+        # Update min_price if today’s price is lower
+        if price < min_price:
+            min_price = price
+
+        # 👉 Behind-the-scenes trace for input [3, 5, 10, 2, 5, 10, 1]
+        #
+        # i = 1, price = 5
+        #   potential_profit = 5 - 3 = 2
+        #   max_profit = 2 (updated from 0)
+        #   min_price = 3 (no change)
+        #
+        # i = 2, price = 10
+        #   potential_profit = 10 - 3 = 7
+        #   max_profit = 7 (updated from 2)
+        #   min_price = 3 (no change)
+        #
+        # i = 3, price = 2
+        #   potential_profit = 2 - 3 = -1
+        #   max_profit = 7 (no update)
+        #   min_price = 2 (updated from 3)
+        #
+        # i = 4, price = 5
+        #   potential_profit = 5 - 2 = 3
+        #   max_profit = 7 (no update)
+        #   min_price = 2 (no change)
+        #
+        # i = 5, price = 10
+        #   potential_profit = 10 - 2 = 8
+        #   max_profit = 8 (updated from 7)
+        #   min_price = 2 (no change)
+        #
+        # i = 6, price = 1
+        #   potential_profit = 1 - 2 = -1
+        #   max_profit = 8 (no update)
+        #   min_price = 1 (updated from 2)
+
+    return max_profit
+
+# ✅ Call with your input
+result = max_profit([3, 5, 10, 2, 5, 10, 1])
 print(f"Maximum profit: {result}")
