@@ -45,7 +45,7 @@ def find_duplicates(nums):
 
     # If no duplicates found, return [-1]
     if not duplicates:
-        return [-1]
+        return [] # if asked to return [-1] array than return [-1]
 
     # Otherwise, return the duplicates as a list
     return list(duplicates)
@@ -76,3 +76,41 @@ print(find_duplicates([1, 2, 3, 4]))  # Expected output: [-1] (no duplicates)
 # we store all of them in the seen set. We also have the duplicates set, 
 # but it would at most contain N elements too in the extreme case where all numbers are duplicates. 
 # So overall, the space used is O(N)
+
+# =======================
+# Example trace for [1, 2, 3, 4]:
+
+def find_duplicates(nums):
+    """
+    Finds duplicate elements in a list of integers.
+    If no duplicates found, returns [-1].
+
+    Parameters:
+    nums (List[int]): The input list.
+
+    Returns:
+    List[int]: A list of duplicates or [-1].
+    """
+
+    seen = set()
+    duplicates = set()
+
+    for num in nums:
+        if num in seen:
+            duplicates.add(num)
+        else:
+            seen.add(num)
+
+        # Example trace for [1, 2, 3, 4]:
+        # num = 1 → not in seen → add to seen → seen = {1}, duplicates = {}
+        # num = 2 → not in seen → add to seen → seen = {1, 2}, duplicates = {}
+        # num = 3 → not in seen → add to seen → seen = {1, 2, 3}, duplicates = {}
+        # num = 4 → not in seen → add to seen → seen = {1, 2, 3, 4}, duplicates = {}
+
+    if not duplicates:
+        return []
+
+    return list(duplicates)
+
+# Example calls
+print(find_duplicates([1, 2, 3, 4]))  # Expected: [-1]

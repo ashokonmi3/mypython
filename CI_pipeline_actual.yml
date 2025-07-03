@@ -1,0 +1,222 @@
+# Name of the workflow. This is what you'll see in the GitHub Actions UI.
+name: Max OTT App CI Pipeline
+
+# This defines when the workflow will trigger.
+on:
+  # The workflow runs when code is pushed.
+  push:
+    # Only run when code is pushed to the 'main' branch.
+    branches:
+      - main
+  # The workflow also runs when a pull request is created or updated.
+  pull_request:
+    # Only if the pull request targets the 'main' branch.
+    branches:
+      - main
+  # This allows manual triggering from the GitHub UI.
+  workflow_dispatch:
+
+# Jobs define the work to be done as part of the pipeline.
+jobs:
+  # Name of the job.
+  build-and-test:
+    # Specify the runner machine — here, the latest Ubuntu VM provided by GitHub.
+    runs-on: ubuntu-latest
+
+    # Define the sequence of steps for this job.
+    steps:
+
+    # Checkout the code from the repository into the runner.
+    - name: Checkout repository code
+      # Use GitHub's official checkout action to pull the code.
+      uses: actions/checkout@v4
+
+    # Set up Python environment for the job.
+    - name: Set up Python 3.11
+      # Use GitHub's official action to install Python.
+      uses: actions/setup-python@v5
+      with:
+        # Version of Python to install.
+        python-version: '3.11'
+
+    # Build the app or generate artifacts (dummy example).
+    - name: Build app artifacts
+      # Run shell commands to simulate a build.
+      run: |
+        # Display build message.
+        echo "Building app..."
+        # Create a directory for build outputs.
+        mkdir build-output
+        # Create a dummy artifact file.
+        echo "Dummy artifact content" > build-output/artifact.txt
+
+    # Upload generated build artifacts for later use or download.
+    - name: Upload build artifacts
+      # Use official upload-artifact action.
+      uses: actions/upload-artifact@v4
+      with:
+        # Name for the uploaded artifact.
+        name: app-artifacts
+        # Path to the files or directory to upload.
+        path: build-output/
+
+    # Set up and install dependencies in virtual environment.
+    - name: Install Python dependencies
+      # Run commands to create virtualenv and install requirements.
+      run: |
+        # Create a virtual environment.
+        python -m venv venv
+        # Activate the virtual environment.
+        source venv/bin/activate
+        # Install required Python packages.
+        pip install -r requirements.txt
+
+    # Run unit tests using Pytest.
+    - name: Run unit tests
+      run: |
+        # Activate virtual environment.
+        source venv/bin/activate
+        # Run Pytest and output results as JUnit XML.
+        pytest tests/unit --junitxml=unit-test-results.xml
+
+    # Upload unit test results so they can be reviewed or downloaded.
+    - name: Upload unit test results
+      uses: actions/upload-artifact@v4
+      with:
+        # Name for the uploaded test results.
+        name: unit-test-results
+        # Path to the XML result file.
+        path: unit-test-results.xml
+
+    # Simulate provisioning of test devices.
+    - name: Provision devices
+      run: |
+        # Display provisioning message (replace with actual API calls in real setup).
+        echo "Provisioning devices via BrowserStack, HeadSpin, STBT..."
+
+    # Run functional tests (end-to-end) using Pytest.
+    - name: Run functional tests
+      run: |
+        # Activate virtual environment.
+        source venv/bin/activate
+        # Run functional tests with markers and save Allure raw results.
+        pytest tests/functional -m "android or ios or web" --alluredir=allure-results
+
+    # Upload raw Allure results for reporting.
+    - name: Upload functional test artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        # Name of the uploaded functional test results.
+        name: functional-test-artifacts
+        # Path to the directory containing Allure result files.
+        path: allure-results/
+
+    # Generate HTML report from Allure raw results.
+    - name: Generate Allure report
+      run: |
+        # Activate virtual environment.
+        source venv/bin/activate
+        # Generate the Allure report in HTML format.
+        allure generate allure-results -o allure-report --clean
+
+    # Upload the generated Allure HTML report.
+    - name: Upload Allure HTML report
+      uses: actions/upload-artifact@v4
+      with:
+        # Name for the report artifact.
+        name: allure-html-report
+        # Path to the HTML report directory.
+        path: allure-report/
+
+    # Send notification to Slack about the pipeline status.
+    - name: Send Slack notification
+      uses: 8398a7/action-slack@v3
+      with:
+        # Pass the job status (success/failure) to Slack.
+        status: ${{ job.status }}
+      env:
+        # Slack webhook URL stored securely in GitHub secrets.
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+    # Send email summary of the pipeline status.
+    - name: Send email notification
+      uses: dawidd6/action-send-mail@v3
+      with:
+        # Address of the SMTP server.
+        server_address: smtp.example.com
+        # SMTP server port.
+        server_port: 587
+        # SMTP username stored securely.
+        username: ${{ secrets.SMTP_USERNAME }}
+        # SMTP password stored securely.
+        password: ${{ secrets.SMTP_PASSWORD }}
+        # Email subject line.
+        subject: "Max OTT CI Pipeline Run #${{ github.run_number }}"
+        # Email recipient(s).
+        to: team@example.com
+        # Email sender.
+        from: ci-bot@example.com
+        # Email body content.
+        body: |
+          Pipeline status: ${{ job.status }}
+          Check GitHub artifacts for Allure report.
+
+    # Simulate updating Xray in Jira.
+    - name: Update Xray in Jira
+      run: |
+        # Display message about updating Xray (replace with real API calls in production).
+        echo "Updating Xray test execution in Jira..."
+
+    # Simulate device cleanup (free up test resources).
+    - name: Cleanup devices
+      run: |
+        # Display cleanup message (replace with real API calls).
+        echo "Cleaning up devices via BrowserStack, HeadSpin, STBT..."
+
+    # Promote build to staging if all previous steps succeeded.
+    - name: Promote build to staging
+      # Condition to run only if the job succeeded.
+      if: ${{ success() }}
+      run: |
+        # Display promotion message (replace with actual promotion logic).
+        echo "Promoting build to staging environment..."
+# 👉 “This YAML file defines a complete Continuous Integration (CI) pipeline that ensures 
+# our code is automatically built, tested, and prepared for deployment whenever certain events occur.
+
+# 👉 The pipeline is triggered in three ways: first, when someone pushes code to a specific
+#  branch like main; second, when a pull request is created or updated targeting that branch; and third, when we manually trigger the workflow using the GitHub UI — for example, for ad-hoc runs or debugging.”
+
+# 👉 “The job in this pipeline runs on GitHub’s hosted Ubuntu environment — specifically the 
+# latest version of Ubuntu available. The first step in the job is to check out the repository code so that it’s available for the build and test process.”
+
+# 👉 “Next, the pipeline sets up the programming environment. In this case, it installs 
+# Python version 3.11 using GitHub’s official setup action. This ensures that the runner has the correct version of Python for the application.”
+
+# 👉 “After setting up Python, the pipeline builds the application. 
+# This step could involve generating platform-specific artifacts like APK files for Android,
+#  IPA files for iOS, or bundles for web applications. These artifacts are stored as build outputs so they can be downloaded later or used in subsequent steps like deployment or testing.”
+
+# 👉 “Once the build artifacts are ready, the pipeline sets up a virtual environment and 
+# installs all project dependencies. This ensures that tests run in an isolated and clean environment, avoiding conflicts with any pre-installed packages.”
+
+# 👉 “Then, the pipeline runs unit tests using Pytest or another test framework.
+#  Unit tests help catch bugs in individual functions or modules early. 
+# The results of these tests are saved in machine-readable formats like JUnit XML so they can be uploaded as artifacts and reviewed.”
+
+# 👉 “After unit testing, the pipeline provisions devices or test environments, 
+# typically through cloud services like BrowserStack, HeadSpin, or STBT. This allows us to run functional or end-to-end tests on real or simulated devices. These tests verify key user journeys like login, search, video playback, and navigation.”
+
+# 👉 “As functional tests run, the pipeline collects logs, screenshots,
+#  and other artifacts. It generates a detailed HTML report using Allure. This report provides visibility into what was tested, what passed, and what failed.”
+
+# 👉 “The pipeline then uploads all artifacts, including build outputs, 
+# test results, and reports, so they can be accessed from the GitHub Actions interface. This ensures full traceability and easy sharing with stakeholders.”
+
+# 👉 “In addition to artifact upload, the pipeline sends out notifications. 
+# It posts a summary of the run to Slack, alerting the team in real time. It also sends an email to relevant stakeholders with details about the run status and links to the reports.”
+
+# 👉 “Finally, the pipeline integrates with Jira using Xray or similar tools.
+#  It updates test executions and links results to the correct stories or test plans. It cleans up any provisioned devices or resources to avoid unnecessary costs or conflicts. If everything passes, the pipeline promotes the build automatically to a higher environment like staging or pre-production, ensuring only validated builds move forward.”
+
+# 👉 “Overall, this pipeline automates the build, test, report, and promote 
+# process with fast feedback and traceability at every stage.”

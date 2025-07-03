@@ -23,8 +23,9 @@ def find_all_indices(nums, target):
     # Initialize an empty list to store indices where target is found
     indices = []
 
-    # Loop through the list using both index and value
-    for i, num in enumerate(nums):
+    # Loop through the list using index
+    for i in range(len(nums)):
+        num = nums[i]  # Get the current element
 
         # Check if current number is the target
         if num == target:
@@ -50,3 +51,41 @@ print(find_all_indices([5, 7, 7, 8, 8, 10], 8))
 # 🎤 Time and space complexity
 # 👉 “Time complexity is O(N) because we look at each element once. Space complexity is O(N) because in the worst case, if every number matches the target, we could store up to N indices in the list.”
 
+# ====================
+def find_all_indices(nums, target):
+    """
+    Finds all indices where target appears in nums.
+
+    Parameters:
+    nums (List[int]): The input list of integers.
+    target (int): The number to find.
+
+    Returns:
+    List[int]: A list of indices where target appears. Empty list if not found.
+    """
+
+    # Initialize empty list to store matching indices
+    indices = []
+
+    # Loop through the list using index
+    for i in range(len(nums)):
+        num = nums[i]  # Get current element
+
+        # If current element matches target, store the index
+        if num == target:
+            indices.append(i)
+
+        # 👉 Example trace for input [5, 7, 7, 8, 8, 8, 10], target = 6
+        # i = 0, num = 5 → not equal → do nothing
+        # i = 1, num = 7 → not equal → do nothing
+        # i = 2, num = 7 → not equal → do nothing
+        # i = 3, num = 8 → not equal → do nothing
+        # i = 4, num = 8 → not equal → do nothing
+        # i = 5, num = 8 → not equal → do nothing
+        # i = 6, num = 10 → not equal → do nothing
+
+    # Return the list of indices (could be empty if no target found)
+    return indices
+
+# Example call:
+print(find_all_indices([5, 7, 7, 8, 8, 8, 10], 6))
