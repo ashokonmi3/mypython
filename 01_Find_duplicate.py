@@ -52,7 +52,7 @@ def find_duplicates(nums):
 
 # Example calls
 print(find_duplicates([1, 2, 4, 2]))  # Expected output: [2]
-print(find_duplicates([1, 2, 3, 4]))  # Expected output: [-1] (no duplicates)
+print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
 
 # Trace table for input [1, 2, 4, 2]:
 # +------------+---------+----------------+--------------------+---------------------------+-----------------+-------------------+
