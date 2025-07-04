@@ -1,15 +1,9 @@
-# 🎤 Clarifying questions to ask the interviewer
-# 🟣 “Are the temperatures always positive integers?”
-# 👉 (Not necessary for the algorithm, but good to confirm)
 
-# 🟣 “What should I return if no warmer temperature comes after a day?”
-# 👉 Usually return 0 for that day.
-
-# 🟣 “Should I optimize for time/space, or is a simple solution okay?”
-# 👉 Lets you choose between brute-force and efficient solutions.
-
-# 🟣 “How large can the input array be?”
-# 👉 Important to justify why you choose an O(N) approach.
+    # ✅ Questions to ask interviewer before writing code:
+    # 1️⃣ Is the list guaranteed to have only integers (temperatures)?
+    # 2️⃣ What should I return if all temperatures are the same? (Return all 0s?)
+    # 3️⃣ Can the input list be empty?
+    # 4️⃣ Are negative temperatures possible, or only positive?
 
 # Approach in simple language
 # 👉 “I go through the list of temperatures one day at a time. 
@@ -25,66 +19,66 @@ def daily_temperatures(temperatures):
     """
     For each day, calculate how many days to wait for a warmer temperature.
     """
-
     # Initialize result list with 0s
+    # Each position corresponds to a day. 0 means no warmer day ahead by default.
     answer = [0] * len(temperatures)
 
-    # Initialize stack to keep indices of temperatures waiting for a warmer day
+    # Initialize an empty stack
+    # The stack will store indices of days that are waiting for a warmer temperature
     stack = []
 
-    # Loop through each day
+    # Loop over temperatures using enumerate, to get both index (current_day) and value (current_temp)
     for current_day, current_temp in enumerate(temperatures):
 
-        # Check if current temperature is warmer than the temperature at top of stack
+        # While stack is not empty AND the current temperature is warmer than
+        # the temperature at the index stored at top of stack:
         while stack and current_temp > temperatures[stack[-1]]:
-            prev_day = stack.pop()
-            answer[prev_day] = current_day - prev_day
+            prev_day = stack.pop()  # Remove the top element (previous day index)
+            answer[prev_day] = current_day - prev_day  # Compute how many days we waited
 
-            # Example trace for input [73, 74, 72, 75]
-            # Day 1 (74) > Day 0 (73): pop 0, answer[0] = 1 - 0 = 1
-            # Day 3 (75) > Day 2 (72): pop 2, answer[2] = 3 - 2 = 1
-            # Day 3 (75) > Day 1 (74): pop 1, answer[1] = 3 - 1 = 2
+            # Example trace for input [73, 74, 72, 75]:
+            # Iteration when current_day = 1, current_temp = 74
+            #   stack = [0], temperatures[0]=73
+            #   74 > 73 → pop 0 → answer[0] = 1 - 0 = 1
+            #
+            # Iteration when current_day = 3, current_temp = 75
+            #   stack = [1, 2], temperatures[2]=72
+            #   75 > 72 → pop 2 → answer[2] = 3 - 2 = 1
+            #   75 > 74 → pop 1 → answer[1] = 3 - 1 = 2
 
-        # If not warmer or after resolving warmer, push current day
+        # Push the current day's index to stack to process later when warmer temp is found
         stack.append(current_day)
 
-        # Detailed trace of each step:
+        # Detailed trace of each iteration for [73, 74, 72, 75]:
         # current_day = 0, current_temp = 73
-        #   stack = [0]
-        #   answer = [0, 0, 0, 0]
+        #   stack = [0], answer = [0, 0, 0, 0]
         #
         # current_day = 1, current_temp = 74
-        #   74 > 73 → pop 0 → answer[0] = 1
-        #   stack = [1]
-        #   answer = [1, 0, 0, 0]
+        #   pop 0 → answer[0]=1 → stack=[1], answer=[1,0,0,0]
         #
         # current_day = 2, current_temp = 72
-        #   72 not warmer → push 2
-        #   stack = [1, 2]
-        #   answer = [1, 0, 0, 0]
+        #   stack=[1,2], answer=[1,0,0,0]
         #
         # current_day = 3, current_temp = 75
-        #   75 > 72 → pop 2 → answer[2] = 1
-        #   75 > 74 → pop 1 → answer[1] = 2
-        #   stack = [3]
-        #   answer = [1, 2, 1, 0]
+        #   pop 2 → answer[2]=1
+        #   pop 1 → answer[1]=2
+        #   stack=[3], answer=[1,2,1,0]
 
-    # Return final answer list
+    # Remaining indices in stack mean no warmer day found → answer stays 0
+
     return answer
 
-# Example call:
-# Input: [73, 74, 72, 75]
-# Expected output: [1, 2, 1, 0]
-print(daily_temperatures([73, 74, 72, 75]))
+# Example call
+print(daily_temperatures([73, 74, 72, 75]))  # Expected output: [1, 2, 1, 0]
 
-# 🎤 Time complexity
-# 👉 “The time complexity is O(N), where N is the number of days or temperatures. 
-# This is because we go through the list once, and each day’s index is added to the stack at 
-# most once and removed from the stack at most once. So, no day’s index is processed more than
-#  twice — once when pushed and once when popped.”
-
-# 🎤 Space complexity
-# 👉 “The space complexity is O(N) because in the worst case — for example 
-# if temperatures are strictly decreasing — we might end up putting all N days onto the
-#  stack before finding a warmer day or finishing the loop. We also use an answer list of size N.”
+# ✅ Complexity explanation:
+# Time complexity:
+#   O(N) because we process each element at most twice:
+#   once when we push its index onto the stack,
+#   once when we pop it from the stack.
+#
+# Space complexity:
+#   O(N) because in the worst case (e.g., decreasing temperatures)
+#   we might have to store all indices in the stack at once.
+#   Also, the answer list is of size N.
 
