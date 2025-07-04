@@ -1,9 +1,8 @@
-
-    # ✅ Questions to ask interviewer before writing code:
-    # 1️⃣ Is the list guaranteed to have only integers (temperatures)?
-    # 2️⃣ What should I return if all temperatures are the same? (Return all 0s?)
-    # 3️⃣ Can the input list be empty?
-    # 4️⃣ Are negative temperatures possible, or only positive?
+# ✅ Questions to ask interviewer before writing code:
+# 1️⃣ Is the list guaranteed to have only integers (temperatures)?
+# 2️⃣ What should I return if all temperatures are the same? (Return all 0s?)
+# 3️⃣ Can the input list be empty?
+# 4️⃣ Are negative temperatures possible, or only positive?
 
 # Approach in simple language
 # 👉 “I go through the list of temperatures one day at a time. 
