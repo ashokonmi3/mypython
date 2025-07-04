@@ -70,14 +70,30 @@ def daily_temperatures(temperatures):
         # → answer = [1, 0, 0, 0]
         #
         # i = 3, temp = 75
-        # → temp 75 > temp at stack[-1] (72 at index 2)
-        # → pop 2, answer[2] = 3 - 2 = 1
-        # → temp 75 > temp at stack[-1] (74 at index 1)
-        # → pop 1, answer[1] = 3 - 1 = 2
-        # → stack = []
-        # → push 3
+        # → Check top of stack: index 2, temp = 72
+        # → 75 > 72 → means day 3 is warmer than day 2
+        # → pop 2 from stack
+        # → calculate days waited: 3 - 2 = 1
+        # → set answer[2] = 1 → day 2 waited 1 day for warmer temp
+        # → stack after pop: [1]
+
+        # → Check new top of stack: index 1, temp = 74
+        # → 75 > 74 → means day 3 is warmer than day 1
+        # → pop 1 from stack
+        # → calculate days waited: 3 - 1 = 2
+        # → set answer[1] = 2 → day 1 waited 2 days for warmer temp
+        # → stack after pop: []
+
+        # → No more previous days to resolve (stack empty now)
+        # → push current day (3) onto stack → waiting for future warmer day
         # → stack = [3]
-        # → answer = [1, 2, 1, 0]
+
+        # → current answer = [1, 2, 1, 0]
+        #     day 0 waited 1 day for warmer temp
+        #     day 1 waited 2 days for warmer temp
+        #     day 2 waited 1 day for warmer temp
+        #     day 3 no warmer day ahead yet → 0
+
 
         i += 1  # Move to the next day
 
