@@ -48,12 +48,36 @@ def daily_temperatures(temperatures):
         # Push current day's index onto stack
         stack.append(i)
 
-        # Iteration details for input [73, 74, 72, 75]:
-        # i=0, current_temp=73 → stack=[0], answer=[0,0,0,0]
-        # i=1, current_temp=74 → pop 0 → answer=[1,0,0,0], stack=[1]
-        # i=2, current_temp=72 → stack=[1,2], answer=[1,0,0,0]
-        # i=3, current_temp=75 → pop 2 → answer=[1,0,1,0]
-        #                        pop 1 → answer=[1,2,1,0], stack=[3]
+                # Detailed trace for input [73, 74, 72, 75]
+        # ----------------------------------------------------------
+        # i = 0, temp = 73
+        # → stack was empty, push 0
+        # → stack = [0]
+        # → answer = [0, 0, 0, 0]
+        #
+        # i = 1, temp = 74
+        # → temp 74 > temp at stack[-1] (73 at index 0)
+        # → pop 0, answer[0] = 1 - 0 = 1
+        # → stack = []
+        # → push 1
+        # → stack = [1]
+        # → answer = [1, 0, 0, 0]
+        #
+        # i = 2, temp = 72
+        # → temp 72 not warmer than temp at stack[-1] (74 at index 1)
+        # → push 2
+        # → stack = [1, 2]
+        # → answer = [1, 0, 0, 0]
+        #
+        # i = 3, temp = 75
+        # → temp 75 > temp at stack[-1] (72 at index 2)
+        # → pop 2, answer[2] = 3 - 2 = 1
+        # → temp 75 > temp at stack[-1] (74 at index 1)
+        # → pop 1, answer[1] = 3 - 1 = 2
+        # → stack = []
+        # → push 3
+        # → stack = [3]
+        # → answer = [1, 2, 1, 0]
 
         i += 1  # Move to the next day
 
