@@ -10,7 +10,7 @@
 # Approch i will follow 
 # I will go through the list one number at a time. 
 # I will keep track of the numbers I have already seen using a set.
-#  If I come across a number that I have already seen, I will add it to another list for duplicates. 
+# If I come across a number that I have already seen, I will add it to another list for duplicates. 
 # In the end, I will return the list of numbers that appeared more than once. 
 
 def find_duplicates(nums):
@@ -68,12 +68,12 @@ print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
 # 🎤 Time complexity
 # 👉 “The time complexity is O(N), where N is the number of elements in the input list. 
 # That’s because we go through the list once, and for each element, 
-# we either check if it’s in the set or add it to the set — both of which are O(1) on average. 
+# we either check if it’s in the list or add it to the list — both of which are O(1) on average. 
 # So overall, we do about 2N constant-time operations — one lookup and possibly one insert for 
 # each number — which is still O(N).”
 # 🎤 Space complexity
 # 👉 “The space complexity is O(N) because in the worst case, if all numbers are unique, 
-# we store all of them in the seen set. We also have the duplicates set, 
+# we store all of them in the list  . We also have the duplicates list, 
 # but it would at most contain N elements too in the extreme case where all numbers are duplicates. 
 # So overall, the space used is O(N)
 
