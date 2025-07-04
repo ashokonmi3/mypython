@@ -16,7 +16,7 @@
 def find_duplicates(nums):
     """
     This function finds duplicate elements in a list of integers.
-    If no duplicates are found, it returns [-1].
+    If no duplicates are found, it returns [].
 
     Parameters:
     nums (List[int]): The input list to check for duplicates.
@@ -25,8 +25,8 @@ def find_duplicates(nums):
     List[int]: A list containing the duplicates found or [-1] if none found.
     """
 
-    seen = set()       # This set will store numbers we have seen so far.
-    duplicates = set() # This set will store numbers that are duplicates.
+    seen = []       # This list will store numbers we have seen so far.
+    duplicates = [] # This list will store numbers that are duplicates.
 
     # Loop through each number in the input list
     for num in nums:
