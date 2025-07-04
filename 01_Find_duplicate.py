@@ -48,7 +48,7 @@ def find_duplicates(nums):
         return [] # if asked to return [-1] array than return [-1]
 
     # Otherwise, return the duplicates as a list
-    return list(duplicates)
+    return duplicates
 
 # Example calls
 print(find_duplicates([1, 2, 4, 2]))  # Expected output: [2]
