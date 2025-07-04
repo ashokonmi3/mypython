@@ -31,10 +31,10 @@ def find_duplicates(nums):
     # Loop through each number in the input list
     for num in nums:
         if num in seen:
-            duplicates.add(num)
+            duplicates.append(num)
             # We've seen this number before — it's a duplicate.
         else:
-            seen.add(num)
+            seen.append(num)
             # First time seeing this number — add to seen.
 
         # Example trace for [1, 2, 4, 2]:
