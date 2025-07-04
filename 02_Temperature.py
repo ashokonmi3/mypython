@@ -19,57 +19,51 @@ def daily_temperatures(temperatures):
     """
     For each day, calculate how many days to wait for a warmer temperature.
     """
-    # Initialize result list with 0s
-    # Each position corresponds to a day. 0 means no warmer day ahead by default.
+
+    # Create result list filled with 0 — by default assume no warmer day
     answer = [0] * len(temperatures)
 
-    # Initialize an empty stack
-    # The stack will store indices of days that are waiting for a warmer temperature
+    # Stack to store indices of days waiting for a warmer day
     stack = []
 
-    # Loop over temperatures using enumerate, to get both index (current_day) and value (current_temp)
-    for current_day, current_temp in enumerate(temperatures):
+    # Loop using index
+    i = 0
+    while i < len(temperatures):
+        current_temp = temperatures[i]  # Get the temperature for the current day (index i)
 
-        # While stack is not empty AND the current temperature is warmer than
-        # the temperature at the index stored at top of stack:
+        # Check if current_temp is warmer than the day at top of stack
         while stack and current_temp > temperatures[stack[-1]]:
-            prev_day = stack.pop()  # Remove the top element (previous day index)
-            answer[prev_day] = current_day - prev_day  # Compute how many days we waited
+            prev_day = stack.pop()  # Remove the index from top of stack
+            answer[prev_day] = i - prev_day  # Compute how many days we waited
 
-            # Example trace for input [73, 74, 72, 75]:
-            # Iteration when current_day = 1, current_temp = 74
-            #   stack = [0], temperatures[0]=73
-            #   74 > 73 → pop 0 → answer[0] = 1 - 0 = 1
+            # Example trace for [73, 74, 72, 75]:
+            # When i=1 (74):
+            # stack=[0], temperatures[0]=73
+            # 74 > 73 → pop 0 → answer[0]=1
             #
-            # Iteration when current_day = 3, current_temp = 75
-            #   stack = [1, 2], temperatures[2]=72
-            #   75 > 72 → pop 2 → answer[2] = 3 - 2 = 1
-            #   75 > 74 → pop 1 → answer[1] = 3 - 1 = 2
+            # When i=3 (75):
+            # stack=[1,2], temperatures[2]=72
+            # 75 > 72 → pop 2 → answer[2]=1
+            # 75 > 74 → pop 1 → answer[1]=2
 
-        # Push the current day's index to stack to process later when warmer temp is found
-        stack.append(current_day)
+        # Push current day's index onto stack
+        stack.append(i)
 
-        # Detailed trace of each iteration for [73, 74, 72, 75]:
-        # current_day = 0, current_temp = 73
-        #   stack = [0], answer = [0, 0, 0, 0]
-        #
-        # current_day = 1, current_temp = 74
-        #   pop 0 → answer[0]=1 → stack=[1], answer=[1,0,0,0]
-        #
-        # current_day = 2, current_temp = 72
-        #   stack=[1,2], answer=[1,0,0,0]
-        #
-        # current_day = 3, current_temp = 75
-        #   pop 2 → answer[2]=1
-        #   pop 1 → answer[1]=2
-        #   stack=[3], answer=[1,2,1,0]
+        # Iteration details for input [73, 74, 72, 75]:
+        # i=0, current_temp=73 → stack=[0], answer=[0,0,0,0]
+        # i=1, current_temp=74 → pop 0 → answer=[1,0,0,0], stack=[1]
+        # i=2, current_temp=72 → stack=[1,2], answer=[1,0,0,0]
+        # i=3, current_temp=75 → pop 2 → answer=[1,0,1,0]
+        #                        pop 1 → answer=[1,2,1,0], stack=[3]
 
-    # Remaining indices in stack mean no warmer day found → answer stays 0
+        i += 1  # Move to the next day
 
+    # Return the result list — any days left in stack had no warmer day ahead, so stay 0
     return answer
 
 # Example call
 print(daily_temperatures([73, 74, 72, 75]))  # Expected output: [1, 2, 1, 0]
+
 
 # ✅ Complexity explanation:
 # Time complexity:
