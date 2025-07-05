@@ -27,7 +27,7 @@ def daily_temperatures(temperatures):
 
     # Loop using index
     i = 0
-    while i < len(temperatures):
+    for i in range(len(temperatures)):
         current_temp = temperatures[i]  # Get the temperature for the current day (index i)
 
         # Check if current_temp is warmer than the day at top of stack
@@ -115,3 +115,43 @@ print(daily_temperatures([73, 74, 72, 75]))  # Expected output: [1, 2, 1, 0]
 #   we might have to store all indices in the stack at once.
 #   Also, the answer list is of size N.
 
+# =========================
+# improved solution 
+
+def daily_temperatures(temperatures):
+    """
+    For each day, calculate how many days to wait for a warmer temperature.
+    Builds the answer list dynamically without pre-filling with zeros.
+    """
+
+    answer = []  # We'll build the list dynamically
+    stack = []   # Stack to store indices of days waiting for warmer temp
+
+    # Use a basic for loop with index (no enumerate)
+    for i in range(len(temperatures)):
+        current_temp = temperatures[i]  # Get current day's temperature
+
+        # Check if this temp resolves any previous days waiting for a warmer day
+        while stack and current_temp > temperatures[stack[-1]]:
+            prev_day = stack.pop()  # Take out the previous cooler day
+            # Fill answer up to prev_day index if needed
+            while len(answer) <= prev_day:
+                answer.append(0)
+            # Set the number of days waited
+            answer[prev_day] = i - prev_day
+
+        # Push current day index onto the stack
+        stack.append(i)
+
+    # After finishing the loop, fill remaining positions with 0
+    # (days that never had a warmer day ahead)
+    for index in stack:
+        while len(answer) <= index:
+            answer.append(0)
+
+    return answer
+
+# Example call
+print(daily_temperatures([73, 74, 72, 75]))  # Expected: [1, 2, 1, 0]
+print(daily_temperatures([70, 71, 69, 72]))  # Expected: [1, 2, 1, 0]
+print(daily_temperatures([73, 72, 71, 70]))  # Expected: [0, 0, 0, 0]
