@@ -1,11 +1,12 @@
 # Questions to be asked 
 #  👉 “Can I assume the list contains only integers?”
-#  👉 “Do you want all duplicates listed once, or do you want a count of how many times each 
-#      number is duplicated?”
 #  👉 “Does the list need to stay in the same order in the output?”
-#  👉 “What if there is no duplicate can i return 0 or -1”
 #  👉 “Is using extra space like a set or dictionary okay, or should I avoid extra space?”
+#  👉 Confirming that duplicate will occure only atmost twice”
 
+# Note: if an element occures more than 2 times it will appear in this program as many times it comes 
+# if 3 times it is there it will in out put 2 times
+# if it is 4 times it will be in out put 3 times
 
 # Approch i will follow 
 # I will go through the list one number at a time. 
@@ -43,7 +44,7 @@ def find_duplicates(nums):
         # num = 4 → not in seen → add to seen → seen = {1, 2, 4}, duplicates = {}
         # num = 2 → in seen → add to duplicates → seen = {1, 2, 4}, duplicates = {2}
 
-    # If no duplicates found, return [-1]
+    # If no duplicates found, return empty list []
     if not duplicates:
         return [] # if asked to return [-1] array than return [-1]
 
@@ -76,8 +77,16 @@ print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
 # we store all of them in the list  . We also have the duplicates list, 
 # but it would at most contain N elements too in the extreme case where all numbers are duplicates. 
 # So overall, the space used is O(N)
-
-# =======================
+# 
+# Improvement
+#I would replace the seen list with a set because checking if a number is in a set is very fast —
+#  it takes the same short time no matter how big the set is. But with a list, 
+# the program has to look through each item one by one, so it takes longer as the list gets bigger. Using a set would make the program work faster, especially if we have a lot of numbers.
+# Checking membership in a set is O(1) on average,
+#  while checking in a list is O(N). This change would make the program much more efficient, 
+#  especially for large lists.
+# in this case seen.append() will be changed to seen.add()
+# # =======================
 # Example trace for [1, 2, 3, 4]:
 
 def find_duplicates(nums):
@@ -92,14 +101,14 @@ def find_duplicates(nums):
     List[int]: A list of duplicates or [-1].
     """
 
-    seen = set()
-    duplicates = set()
+    seen = []
+    duplicates = []
 
     for num in nums:
         if num in seen:
-            duplicates.add(num)
+            duplicates.append(num)
         else:
-            seen.add(num)
+            seen.append(num)
 
         # Example trace for [1, 2, 3, 4]:
         # num = 1 → not in seen → add to seen → seen = {1}, duplicates = {}
@@ -110,7 +119,7 @@ def find_duplicates(nums):
     if not duplicates:
         return []
 
-    return list(duplicates)
+    return duplicates
 
 # Example calls
 print(find_duplicates([1, 2, 3, 4]))  # Expected: [-1]
