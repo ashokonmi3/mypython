@@ -10,7 +10,7 @@
 
 # Approch i will follow 
 # I will go through the list one number at a time. 
-# I will keep track of the numbers I have already seen using a set.
+# I will keep track of the numbers I have already seen using a list.
 # If I come across a number that I have already seen, I will add it to another list for duplicates. 
 # In the end, I will return the list of numbers that appeared more than once. 
 
@@ -45,8 +45,9 @@ def find_duplicates(nums):
         # num = 2 → in seen → add to duplicates → seen = {1, 2, 4}, duplicates = {2}
 
     # If no duplicates found, return empty list []
+    # this is not needed 
     if not duplicates:
-        return [] # if asked to return [-1] array than return [-1]
+        return [-1] # if asked to return [-1] array than return [-1]
 
     # Otherwise, return the duplicates as a list
     return duplicates
@@ -54,6 +55,7 @@ def find_duplicates(nums):
 # Example calls
 print(find_duplicates([1, 2, 4, 2]))  # Expected output: [2]
 print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
+print(find_duplicates([1, 2,2 ,3,4,5 4]))  # Expected output: [] (no duplicates)
 
 # Trace table for input [1, 2, 4, 2]:
 # +------------+---------+----------------+--------------------+---------------------------+-----------------+-------------------+

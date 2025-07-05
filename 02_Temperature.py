@@ -48,7 +48,18 @@ def daily_temperatures(temperatures):
         # Push current day's index onto stack
         stack.append(i)
 
-                # Detailed trace for input [73, 74, 72, 75]
+        #first iteration i= 0, current_temp=73, stack=[0], answer=[0,0,0,0]
+        #2nd iteration , i=1 , current_temp=74, 74>73, prev_day=0, answer[0]=1-0=1 --> answer=[1,0,0,0], stack=[1],i=2
+        #3rd iteration,i=2, current_temp=72, 72>74, stack =[1,2] , i=3, answer= [1,0,0,0]
+        #4th iteration,i=3, current_temp=75 > 72
+                    # prev_day =2
+					# answer[2] =3-2=1  ---> answer=[ 1,0,1,0]
+					
+					# current_temp=75>74
+					# prev_day=1
+					# answer[1]=3-1=2----> answer=[1,2,1,0]
+
+        # Detailed trace for input [73, 74, 72, 75]
         # ----------------------------------------------------------
         # i = 0, temp = 73
         # → stack was empty, push 0
@@ -94,7 +105,20 @@ def daily_temperatures(temperatures):
         #     day 2 waited 1 day for warmer temp
         #     day 3 no warmer day ahead yet → 0
 
+# "Let me walk you through my code for solving the daily temperatures problem.
 
+# First, I create a list called answer that has the same length as the input temperatures list, and I fill it with zeroes. This list will store, for each day, how many days we need to wait until we see a warmer temperature. If no warmer day comes, the value stays zero.
+
+# Next, I use a stack to keep track of the indices of days that are waiting for a warmer temperature. As I loop through each temperature in the list, I compare the current day’s temperature with the temperature at the index stored at the top of the stack.
+
+# If the current day’s temperature is warmer, that means we’ve found a warmer day for the previous day stored in the stack. I pop that day’s index from the stack, calculate how many days we had to wait by subtracting their positions, and I update the answer list for that day.
+
+# I repeat this check in a while loop until either the stack is empty or the current temperature is not warmer than the one at the top of the stack.
+
+# After that, I push the current day’s index onto the stack so it can wait for its future warmer day.
+
+# At the end of the loop, any index still in the stack did not get a warmer day, so the corresponding value in answer stays zero.
+# Finally, I return the answer list."
         i += 1  # Move to the next day
 
     # Return the result list — any days left in stack had no warmer day ahead, so stay 0
