@@ -5,8 +5,6 @@
 #      or do I need to handle empty or one-element lists?”
 #  👉 “Should I return zero profit if no profit is possible, 
 #       or do you want some special output in that case?”
-#  👉 “Do I need to return the actual buy/sell days or prices,
-#      or just the maximum profit?”
 #  👉 “Is there only one transaction allowed (one buy, one sell), 
 #      or can we buy and sell multiple times?”
 
