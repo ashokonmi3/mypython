@@ -1,0 +1,18 @@
+11 am -- pipeline starts 
+2 pm complete 
+
+critical bug --- riased yuesterday and that fix is not available in 11 am build
+this fix is checked in at 11:30 after current build is started..
+
+he has to wait till 2 pm to get current pipleline to be completed 
+
+
+2 pm the new pipleline will start and it will have the fix which is provided at 11:30
+
+
+so developer has to wait ideally from 11:30 to 2 pm
+
+
+instead of that what we cud do abort the current pipelin and start a new pipleing on demand at 11:30 by developer
+so he will get the early feed back
+

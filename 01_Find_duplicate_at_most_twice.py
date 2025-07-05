@@ -2,7 +2,7 @@
 #  👉 “Can I assume the list contains only integers?”
 #  👉 “Does the list need to stay in the same order in the output?”
 #  👉 “Is using extra space like a set or dictionary okay, or should I avoid extra space?”
-#  👉 Confirming that duplicate will occure only atmost twice”
+#  👉 Confirming that duplicate will occure only atmost twice in input”
 
 # Note: if an element occures more than 2 times it will appear in this program as many times it comes 
 # if 3 times it is there it will in out put 2 times
