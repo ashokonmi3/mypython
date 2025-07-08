@@ -1,18 +1,29 @@
 # Questions to be asked 
 #  👉 “Can I assume the list contains only integers?”
 #  👉 “Does the list need to stay in the same order in the output?”
-#  👉 “Is using extra space like a set or dictionary okay, or should I avoid extra space?”
 #  👉 Confirming that duplicate will occure only atmost twice in input”
+#  👉 How much time i have to solve this problem”
 
-# Note: if an element occures more than 2 times it will appear in this program as many times it comes 
+# Note:  for this solutio if an element occures more than 2 times it 
+# will appear in this program as many times it comes 
 # if 3 times it is there it will in out put 2 times
 # if it is 4 times it will be in out put 3 times
+# this will work on both sorted or unsorted list
 
-# Approch i will follow 
-# I will go through the list one number at a time. 
-# I will keep track of the numbers I have already seen using a list.
-# If I come across a number that I have already seen, I will add it to another list for duplicates. 
-# In the end, I will return the list of numbers that appeared more than once. 
+# Approach: I am going to use 2 lists here
+# first List for seen element : This will store the numbers we've already encountered
+#  while iterating through the list.
+
+# second List duplicates for duplicate: This will store the numbers that are 
+# repeated (i.e., the duplicates).
+
+# For each element in the list, check if it’s already in the seen list:
+
+    # If it is, add it to the duplicates list.
+
+    # If it’s not, add it to the seen list.
+
+# Finally, return the duplicates list. If no duplicates are found, return [].
 
 def find_duplicates(nums):
     """
@@ -39,15 +50,15 @@ def find_duplicates(nums):
             # First time seeing this number — add to seen.
 
         # Example trace for [1, 2, 4, 2]:
-        # num = 1 → not in seen → add to seen → seen = {1}, duplicates = {}
-        # num = 2 → not in seen → add to seen → seen = {1, 2}, duplicates = {}
-        # num = 4 → not in seen → add to seen → seen = {1, 2, 4}, duplicates = {}
-        # num = 2 → in seen → add to duplicates → seen = {1, 2, 4}, duplicates = {2}
+        # num = 1 → not in seen → add to seen → seen = [1], duplicates = []
+        # num = 2 → not in seen → add to seen → seen = [1, 2], duplicates = []
+        # num = 4 → not in seen → add to seen → seen = [1, 2, 4], duplicates = []
+        # num = 2 → in seen → add to duplicates → seen = [1, 2, 4], duplicates = [2]
 
     # If no duplicates found, return empty list []
     # this is not needed 
     if not duplicates:
-        return [-1] # if asked to return [-1] array than return [-1]
+        return [] # if asked to return [-1] array than return [-1]
 
     # Otherwise, return the duplicates as a list
     return duplicates
@@ -55,7 +66,7 @@ def find_duplicates(nums):
 # Example calls
 print(find_duplicates([1, 2, 4, 2]))  # Expected output: [2]
 print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
-print(find_duplicates([1, 2,2 ,3,4,5 4]))  # Expected output: [] (no duplicates)
+print(find_duplicates([1,2,2,3,2,4,5,4]))  # Expected output: [2,2,4] (it will give multiple time as our req is to have max 2 element)
 
 # Trace table for input [1, 2, 4, 2]:
 # +------------+---------+----------------+--------------------+---------------------------+-----------------+-------------------+
@@ -69,15 +80,20 @@ print(find_duplicates([1, 2,2 ,3,4,5 4]))  # Expected output: [] (no duplicates)
 
 
 # 🎤 Time complexity
-# 👉 “The time complexity is O(N), where N is the number of elements in the input list. 
+# 👉 “The time complexity is O(N), where N is the number of elements in 
+# the input list. 
 # That’s because we go through the list once, and for each element, 
-# we either check if it’s in the list or add it to the list — both of which are O(1) on average. 
-# So overall, we do about 2N constant-time operations — one lookup and possibly one insert for 
+# we either check if it’s in the list or add it to the list — 
+# both of which are O(1) on average. 
+# So overall, we do about 2N constant-time operations — one lookup
+#  and possibly one insert for 
 # each number — which is still O(N).”
 # 🎤 Space complexity
-# 👉 “The space complexity is O(N) because in the worst case, if all numbers are unique, 
+# 👉 “The space complexity is O(N) because in the worst case, 
+# if all numbers are unique, 
 # we store all of them in the list  . We also have the duplicates list, 
-# but it would at most contain N elements too in the extreme case where all numbers are duplicates. 
+# but it would at most contain N elements too in the extreme case where all numbers 
+# are duplicates. 
 # So overall, the space used is O(N)
 # 
 # Improvement

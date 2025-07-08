@@ -3,6 +3,7 @@
 # 2️⃣ What should I return if all temperatures are the same? (Return all 0s?)
 # 3️⃣ Can the input list be empty?
 # 4️⃣ Are negative temperatures possible, or only positive?
+# How much time i have for this 
 
 # Approach in simple language
 # 👉 “I go through the list of temperatures one day at a time. 
@@ -12,7 +13,8 @@
 # I fill this value into the result list.
 # If I don’t find a warmer temperature for a day, 
 # I leave its value as zero, since we initialized the answer list with zeros. 
-# This approach is efficient because each day’s index goes into the stack once and comes out once.”
+# This approach is efficient because each day’s index goes into the stack once 
+# and comes out once.”
 
 def daily_temperatures(temperatures):
     """
@@ -28,7 +30,8 @@ def daily_temperatures(temperatures):
     # Loop using index
     i = 0
     for i in range(len(temperatures)):
-        current_temp = temperatures[i]  # Get the temperature for the current day (index i)
+        current_temp = temperatures[i]  # 
+        # Get the temperature for the current day (index i)
 
         # Check if current_temp is warmer than the day at top of stack
         while stack and current_temp > temperatures[stack[-1]]:
@@ -47,9 +50,10 @@ def daily_temperatures(temperatures):
 
         # Push current day's index onto stack
         stack.append(i)
-
+        # [73, 74, 72, 75]
         #first iteration i= 0, current_temp=73, stack=[0], answer=[0,0,0,0]
-        #2nd iteration , i=1 , current_temp=74, 74>73, prev_day=0, answer[0]=1-0=1 --> answer=[1,0,0,0], stack=[1],i=2
+        #2nd iteration , i=1 , current_temp=74, 74>73, prev_day=0, 
+        # answer[0]=1-0=1 --> answer=[1,0,0,0], stack=[1],i=2
         #3rd iteration,i=2, current_temp=72, 72>74, stack =[1,2] , i=3, answer= [1,0,0,0]
         #4th iteration,i=3, current_temp=75 > 72
                     # prev_day =2
@@ -59,52 +63,7 @@ def daily_temperatures(temperatures):
 					# prev_day=1
 					# answer[1]=3-1=2----> answer=[1,2,1,0]
 
-        # Detailed trace for input [73, 74, 72, 75]
-        # ----------------------------------------------------------
-        # i = 0, temp = 73
-        # → stack was empty, push 0
-        # → stack = [0]
-        # → answer = [0, 0, 0, 0]
-        #
-        # i = 1, temp = 74
-        # → temp 74 > temp at stack[-1] (73 at index 0)
-        # → pop 0, answer[0] = 1 - 0 = 1
-        # → stack = []
-        # → push 1
-        # → stack = [1]
-        # → answer = [1, 0, 0, 0]
-        #
-        # i = 2, temp = 72
-        # → temp 72 not warmer than temp at stack[-1] (74 at index 1)
-        # → push 2
-        # → stack = [1, 2]
-        # → answer = [1, 0, 0, 0]
-        #
-        # i = 3, temp = 75
-        # → Check top of stack: index 2, temp = 72
-        # → 75 > 72 → means day 3 is warmer than day 2
-        # → pop 2 from stack
-        # → calculate days waited: 3 - 2 = 1
-        # → set answer[2] = 1 → day 2 waited 1 day for warmer temp
-        # → stack after pop: [1]
-
-        # → Check new top of stack: index 1, temp = 74
-        # → 75 > 74 → means day 3 is warmer than day 1
-        # → pop 1 from stack
-        # → calculate days waited: 3 - 1 = 2
-        # → set answer[1] = 2 → day 1 waited 2 days for warmer temp
-        # → stack after pop: []
-
-        # → No more previous days to resolve (stack empty now)
-        # → push current day (3) onto stack → waiting for future warmer day
-        # → stack = [3]
-
-        # → current answer = [1, 2, 1, 0]
-        #     day 0 waited 1 day for warmer temp
-        #     day 1 waited 2 days for warmer temp
-        #     day 2 waited 1 day for warmer temp
-        #     day 3 no warmer day ahead yet → 0
-
+        
 # "Let me walk you through my code for solving the daily temperatures problem.
 
 # First, I create a list called answer that has the same length as the input temperatures list, and I fill it with zeroes. This list will store, for each day, how many days we need to wait until we see a warmer temperature. If no warmer day comes, the value stays zero.
@@ -119,14 +78,13 @@ def daily_temperatures(temperatures):
 
 # At the end of the loop, any index still in the stack did not get a warmer day, so the corresponding value in answer stays zero.
 # Finally, I return the answer list."
-        i += 1  # Move to the next day
 
     # Return the result list — any days left in stack had no warmer day ahead, so stay 0
     return answer
 
 # Example call
 print(daily_temperatures([73, 74, 72, 75]))  # Expected output: [1, 2, 1, 0]
-
+print(daily_temperatures([73, 80, 72, 75]))  # Expected output: [1, 0, 1, 0]
 
 # ✅ Complexity explanation:
 # Time complexity:

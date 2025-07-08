@@ -55,4 +55,5 @@ def find_duplicates(nums):
 # Example calls:
 print(find_duplicates([1, 2, 4, 2]))        # Expected output: [2] (order may vary)
 print(find_duplicates([1, 2, 3, 4]))        # Expected output: []
+print(find_duplicates([1, 2,4,4,4, 3, 4]))        # Expected output: [4]
 

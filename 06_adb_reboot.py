@@ -33,6 +33,7 @@
 # adb shell dmesg
 # # ✅ Kernel logs, might show boot or hardware issues
 # ==========================
+# Question  to be asked
 # 👉 Do we want to reboot the device just once, or multiple times? Should the number of reboots be configurable?
 
 # 👉 After rebooting, do we only need to check if the device is online, or also confirm that it has finished booting (sys.boot_completed)?
@@ -42,8 +43,11 @@
 # 👉 What should the program do if the reboot fails? Should it retry or stop?
 # =======================
 # Approch
-# “My approach would be to reboot the device using adb reboot, wait for it to reconnect using adb wait-for-device, 
-# and then confirm that the device has finished booting using adb shell getprop sys.boot_completed. I’d do this in a loop for the number of reboots needed, and include error handling in case the device fails to come back online.”
+# “My approach would be to reboot the device using adb reboot,
+#  wait for it to reconnect using adb wait-for-device, 
+# and then confirm that the device has finished booting using adb shell
+#  getprop sys.boot_completed. I’d do this in a loop for the number of reboots needed, 
+# and include error handling in case the device fails to come back online.”
 # ================
 import subprocess  # We import subprocess to run ADB commands from Python
 import time        # We import time so we can pause between operations
