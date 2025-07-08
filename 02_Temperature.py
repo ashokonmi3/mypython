@@ -7,14 +7,16 @@
 
 # Approach in simple language
 # 👉 “I go through the list of temperatures one day at a time. 
-# I use a stack to remember the days where I’m still waiting for a warmer temperature.
+# I will use use a stack to remember the days where I’m still waiting for a warmer temperature.
 # Whenever I find a warmer temperature than a previous day stored on the stack, 
 # I calculate how many days I had to wait by subtracting the indices. 
-# I fill this value into the result list.
+# I will fill this value into the result list.
 # If I don’t find a warmer temperature for a day, 
 # I leave its value as zero, since we initialized the answer list with zeros. 
-# This approach is efficient because each day’s index goes into the stack once 
+# I feel This approach is efficient because each day’s index goes into the stack once 
 # and comes out once.”
+
+
 
 def daily_temperatures(temperatures):
     """
@@ -22,70 +24,110 @@ def daily_temperatures(temperatures):
     """
 
     # Create result list filled with 0 — by default assume no warmer day
-    answer = [0] * len(temperatures)
+    wait_time = [0] * len(temperatures)
 
-    # Stack to store indices of days waiting for a warmer day
-    stack = []
+    # Waiting_days to store indices of days waiting for a warmer day
+    waiting_days = []
 
     # Loop using index
-    i = 0
     for i in range(len(temperatures)):
-        current_temp = temperatures[i]  # 
-        # Get the temperature for the current day (index i)
+        current_temp = temperatures[i]  # Get the temperature for the current day (index i)
 
-        # Check if current_temp is warmer than the day at top of stack
-        while stack and current_temp > temperatures[stack[-1]]:
-            prev_day = stack.pop()  # Remove the index from top of stack
-            answer[prev_day] = i - prev_day  # Compute how many days we waited
+        # Check if current_temp is warmer than the day at top of waiting_days
+        while waiting_days and current_temp > temperatures[waiting_days[-1]]:
+            prev_day = waiting_days.pop()  # Remove the index from top of waiting_days
+            wait_time[prev_day] = i - prev_day  # Compute how many days we waited
 
             # Example trace for [73, 74, 72, 75]:
             # When i=1 (74):
-            # stack=[0], temperatures[0]=73
-            # 74 > 73 → pop 0 → answer[0]=1
+            # waiting_days=[0], temperatures[0]=73
+            # 74 > 73 → pop 0 → wait_time[0]=1
             #
             # When i=3 (75):
-            # stack=[1,2], temperatures[2]=72
-            # 75 > 72 → pop 2 → answer[2]=1
-            # 75 > 74 → pop 1 → answer[1]=2
+            # waiting_days=[1,2], temperatures[2]=72
+            # 75 > 72 → pop 2 → wait_time[2]=1
+            # 75 > 74 → pop 1 → wait_time[1]=2
 
-        # Push current day's index onto stack
-        stack.append(i)
-        # [73, 74, 72, 75]
-        #first iteration i= 0, current_temp=73, stack=[0], answer=[0,0,0,0]
-        #2nd iteration , i=1 , current_temp=74, 74>73, prev_day=0, 
-        # answer[0]=1-0=1 --> answer=[1,0,0,0], stack=[1],i=2
-        #3rd iteration,i=2, current_temp=72, 72>74, stack =[1,2] , i=3, answer= [1,0,0,0]
-        #4th iteration,i=3, current_temp=75 > 72
-                    # prev_day =2
-					# answer[2] =3-2=1  ---> answer=[ 1,0,1,0]
-					
-					# current_temp=75>74
-					# prev_day=1
-					# answer[1]=3-1=2----> answer=[1,2,1,0]
-
+        # Push current day's index onto waiting_days
+        waiting_days.append(i)
         
-# "Let me walk you through my code for solving the daily temperatures problem.
+        # Trace for [73, 74, 72, 75]
+        # first iteration i= 0, current_temp=73, waiting_days=[0], wait_time=[0,0,0,0]
+        # second iteration, i=1 , current_temp=74, 74 > 73, prev_day=0, 
+        # wait_time[0]=1-0=1 --> wait_time=[1,0,0,0], waiting_days=[1],i=2
+        # third iteration, i=2, current_temp=72, 72 > 74, waiting_days =[1,2] , i=3, wait_time= [1,0,0,0]
+        # fourth iteration, i=3, current_temp=75 > 72
+        #   prev_day =2
+        #   wait_time[2] = 3 - 2 = 1  ---> wait_time=[ 1,0,1,0]
+        #   current_temp=75 > 74
+        #   prev_day=1
+        #   wait_time[1]=3-1=2----> wait_time=[1,2,1,0]
 
-# First, I create a list called answer that has the same length as the input temperatures list, and I fill it with zeroes. This list will store, for each day, how many days we need to wait until we see a warmer temperature. If no warmer day comes, the value stays zero.
+    # Return the result list — any days left in waiting_days had no warmer day ahead, so stay 0
+    return wait_time
 
-# Next, I use a stack to keep track of the indices of days that are waiting for a warmer temperature. As I loop through each temperature in the list, I compare the current day’s temperature with the temperature at the index stored at the top of the stack.
-
-# If the current day’s temperature is warmer, that means we’ve found a warmer day for the previous day stored in the stack. I pop that day’s index from the stack, calculate how many days we had to wait by subtracting their positions, and I update the answer list for that day.
-
-# I repeat this check in a while loop until either the stack is empty or the current temperature is not warmer than the one at the top of the stack.
-
-# After that, I push the current day’s index onto the stack so it can wait for its future warmer day.
-
-# At the end of the loop, any index still in the stack did not get a warmer day, so the corresponding value in answer stays zero.
-# Finally, I return the answer list."
-
-    # Return the result list — any days left in stack had no warmer day ahead, so stay 0
-    return answer
-
-# Example call
+# Example calls:
 print(daily_temperatures([73, 74, 72, 75]))  # Expected output: [1, 2, 1, 0]
 print(daily_temperatures([73, 80, 72, 75]))  # Expected output: [1, 0, 1, 0]
 
+
+        
+# Explanation of the daily_temperatures Code:
+# "Let me walk you through my code for solving the daily temperatures problem."
+
+# Initialization:
+
+# First, I create a list called wait_time that has the same length as the input temperatures list, 
+# and I initialize it with zeroes. This list will store, for each day, 
+# how many days we need to wait until we see a warmer temperature. 
+# If no warmer day comes, the value will remain zero.
+
+# Use waiting_days to Track Days Waiting for Warmer Temperatures:
+
+# Next, I use a list called waiting_days to keep track of the indices of days that are
+#  waiting for a warmer temperature. This helps me remember the days for which I haven't 
+# yet found a warmer temperature.
+
+# As I loop through each temperature in the list, I compare the current day's temperature 
+# with the temperature at the index stored at the top of the waiting_days list.
+
+# Check for Warmer Day:
+
+# If the current day's temperature is warmer than the temperature of the day at the
+#  top of waiting_days, this means we have found a warmer day for the day stored at the 
+# top of the waiting_days list.
+
+# I then pop that day's index from waiting_days and calculate how many days we had to 
+# wait by subtracting their positions (i.e., i - prev_day).
+
+# I update the corresponding position in the wait_time list with this value,
+#  representing the number of days it took to find a warmer day.
+
+# Repeat the Process:
+
+# I continue to check in a while loop as long as there are elements in waiting_days
+#  and the current temperature is warmer than the one at the top of the waiting_days.
+
+# Once the waiting_days stack is either empty or the current temperature is no longer warmer,
+#  I stop the process for that particular day.
+
+# Add the Current Day's Index to waiting_days:
+
+# After checking for warmer days, I push the current day's index onto the waiting_days list, 
+# so that this day can "wait" for a warmer temperature on subsequent iterations.
+
+# Handle Days with No Warmer Temperature:
+
+# At the end of the loop, any index still remaining in the waiting_days list did 
+# not find a warmer day ahead, so the corresponding value in wait_time stays zero.
+
+# Return the Result:
+
+# Finally, I return the wait_time list, which contains how many days each day had to
+#  wait for a warmer temperature. If a day did not find a warmer temperature, its value will remain 0.
+
+
+   
 # ✅ Complexity explanation:
 # Time complexity:
 #   O(N) because we process each element at most twice:
@@ -137,3 +179,78 @@ def daily_temperatures(temperatures):
 print(daily_temperatures([73, 74, 72, 75]))  # Expected: [1, 2, 1, 0]
 print(daily_temperatures([70, 71, 69, 72]))  # Expected: [1, 2, 1, 0]
 print(daily_temperatures([73, 72, 71, 70]))  # Expected: [0, 0, 0, 0]
+
+# ======================
+def daily_temperatures(temperatures):
+    """
+    For each day, calculate how many days to wait for a warmer temperature.
+    """
+
+    # 📝 Create result list filled with 0 — by default assume no warmer day
+    wait_time = [0] * len(temperatures)
+
+    # ⏳ Waiting_days to store indices of days waiting for a warmer day
+    waiting_days = []
+
+    # 🔄 Loop through each day's temperature
+    for i in range(len(temperatures)):
+        current_temp = temperatures[i]  # 🌡 Get the temperature for the current day (index i)
+
+        # 🔥 Check if current_temp is warmer than the day at top of waiting_days
+        while waiting_days and current_temp > temperatures[waiting_days[-1]]:
+            prev_day = waiting_days.pop()  # 🔽 Remove the index from top of waiting_days
+            wait_time[prev_day] = i - prev_day  # 🕒 Calculate how many days we waited
+
+            # 📍 **Trace for input [73, 80, 72, 75]:**
+            # When i=1 (74):
+            #   waiting_days=[0], temperatures[0]=73
+            #   74 > 73 → pop 0 → wait_time[0]=1
+            #
+            # When i=3 (75):
+            #   waiting_days=[1,2], temperatures[2]=72
+            #   75 > 72 → pop 2 → wait_time[2]=1
+            #   75 > 74 → pop 1 → wait_time[1]=2
+
+        # ⬆️ Push current day's index onto waiting_days
+        waiting_days.append(i)
+        
+        # 📊 **Trace for [73, 80, 72, 75]**
+        
+        # 1️⃣ **First iteration (i = 0, num = 73)**: 
+        #   - current_temp = 73
+        #   - 73 is not in waiting_days, so we add 73 to waiting_days.
+        #   - waiting_days = [0], wait_time = [0, 0, 0, 0] (no change)
+
+        # 2️⃣ **Second iteration (i = 1, num = 80)**: 
+        #   - current_temp = 80
+        #   - 80 > 73 (temperature at index 0 in waiting_days).
+        #   - Pop index 0 from waiting_days and calculate how many days `73` had to wait:
+        #     - wait_time[0] = 1 - 0 = 1
+        #   - waiting_days = [], wait_time = [1, 0, 0, 0]
+        #   - Add index 1 to waiting_days.
+        #   - waiting_days = [1]
+
+        # 3️⃣ **Third iteration (i = 2, num = 72)**: 
+        #   - current_temp = 72
+        #   - 72 is not greater than 80 (temperature at index 1 in waiting_days).
+        #   - Add 72 to waiting_days without popping anything.
+        #   - waiting_days = [1, 2], wait_time = [1, 0, 0, 0] (no change)
+
+        # 4️⃣ **Fourth iteration (i = 3, num = 75)**: 
+        #   - current_temp = 75
+        #   - 75 > 72 (temperature at index 2 in waiting_days).
+        #   - Pop index 2 from waiting_days and calculate how many days `72` had to wait:
+        #     - wait_time[2] = 3 - 2 = 1
+        #   - waiting_days = [1], wait_time = [1, 0, 1, 0]
+        #   - 75 > 74 (temperature at index 1 in waiting_days).
+        #   - Pop index 1 from waiting_days and calculate how many days `74` had to wait:
+        #     - wait_time[1] = 3 - 1 = 2
+        #   - waiting_days = [], wait_time = [1, 2, 1, 0]
+        #   - Add index 3 to waiting_days.
+        #   - waiting_days = [3]
+
+    # 🔚 Return the result list — any days left in waiting_days had no warmer day ahead, so stay 0
+    return wait_time
+
+# Example calls:
+print(daily_temperatures([73, 80, 72, 75]))  # Expected output: [1, 0, 1, 0]
