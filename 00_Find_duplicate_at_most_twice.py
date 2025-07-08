@@ -1,40 +1,37 @@
 # Questions to be asked 
 #  👉 “Can I assume the list contains only integers?”
-#  👉 “Does the list need to stay in the same order in the output?”
-#  👉 Confirming that duplicate will occure only atmost twice in input”
+#  👉 “Does the list need to stay in the same order in the output?” - 
+#      this program will give o/p in order only
+#  👉 Confirming that duplicate will occure only atmost twice in input” 
+#      if more than 2 it will give n-1 occurance
 #  👉 How much time i have to solve this problem”
 
-# Note:  for this solutio if an element occures more than 2 times it 
+# Note:  for this solution if an element occures more than 2 times it 
 # will appear in this program as many times it comes 
 # if 3 times it is there it will in out put 2 times
 # if it is 4 times it will be in out put 3 times
 # this will work on both sorted or unsorted list
 
-# Approach: I am going to use 2 lists here
+# 👉 Approach: I am going to use 2 lists here and iterate through the input
 # first List for seen element : This will store the numbers we've already encountered
-#  while iterating through the list.
+# while iterating through the list.
 
-# second List duplicates for duplicate: This will store the numbers that are 
+# second List duplicates for storing the duplicate: This will store the numbers that are 
 # repeated (i.e., the duplicates).
 
 # For each element in the list, check if it’s already in the seen list:
-
-    # If it is, add it to the duplicates list.
-
-    # If it’s not, add it to the seen list.
-
-# Finally, return the duplicates list. If no duplicates are found, return [].
+# If it is, add it to the duplicates list.
+# If it’s not, add it to the seen list.
+# Finally, i will return the duplicates list. If no duplicates are found, return [].
 
 def find_duplicates(nums):
     """
     This function finds duplicate elements in a list of integers.
     If no duplicates are found, it returns [].
-
     Parameters:
     nums (List[int]): The input list to check for duplicates.
-
     Returns:
-    List[int]: A list containing the duplicates found or [-1] if none found.
+    List[int]: A list containing the duplicates found or [] if none found.
     """
 
     seen = []       # This list will store numbers we have seen so far.
@@ -49,24 +46,37 @@ def find_duplicates(nums):
             seen.append(num)
             # First time seeing this number — add to seen.
 
-        # Example trace for [1, 2, 4, 2]:
+       # Example trace for [1, 2, 4, 2]:
         # num = 1 → not in seen → add to seen → seen = [1], duplicates = []
         # num = 2 → not in seen → add to seen → seen = [1, 2], duplicates = []
         # num = 4 → not in seen → add to seen → seen = [1, 2, 4], duplicates = []
         # num = 2 → in seen → add to duplicates → seen = [1, 2, 4], duplicates = [2]
 
-    # If no duplicates found, return empty list []
-    # this is not needed 
-    if not duplicates:
-        return [] # if asked to return [-1] array than return [-1]
+        # Example trace for [1, 2, 3, 4]:
+        # num = 1 → not in seen → add to seen → seen = [1], duplicates = []
+        # num = 2 → not in seen → add to seen → seen = [1, 2], duplicates = []
+        # num = 3 → not in seen → add to seen → seen = [1, 2, 3], duplicates = []
+        # num = 4 → not in seen → add to seen → seen = [1, 2, 3, 4], duplicates = []
+
+
+    # If no duplicates found, the code automatically return empty list []
+    # this is not needed only if asked to return [-1] 
+    
+    # if not duplicates:
+    #     return [-1] # if asked to return [-1] array than return [-1]
 
     # Otherwise, return the duplicates as a list
     return duplicates
-
+       
 # Example calls
 print(find_duplicates([1, 2, 4, 2]))  # Expected output: [2]
 print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
 print(find_duplicates([1,2,2,3,2,4,5,4]))  # Expected output: [2,2,4] (it will give multiple time as our req is to have max 2 element)
+
+
+
+
+
 
 # Trace table for input [1, 2, 4, 2]:
 # +------------+---------+----------------+--------------------+---------------------------+-----------------+-------------------+
@@ -105,39 +115,3 @@ print(find_duplicates([1,2,2,3,2,4,5,4]))  # Expected output: [2,2,4] (it will g
 #  especially for large lists.
 # in this case seen.append() will be changed to seen.add()
 # # =======================
-# Example trace for [1, 2, 3, 4]:
-
-def find_duplicates(nums):
-    """
-    Finds duplicate elements in a list of integers.
-    If no duplicates found, returns [-1].
-
-    Parameters:
-    nums (List[int]): The input list.
-
-    Returns:
-    List[int]: A list of duplicates or [-1].
-    """
-
-    seen = []
-    duplicates = []
-
-    for num in nums:
-        if num in seen:
-            duplicates.append(num)
-        else:
-            seen.append(num)
-
-        # Example trace for [1, 2, 3, 4]:
-        # num = 1 → not in seen → add to seen → seen = {1}, duplicates = {}
-        # num = 2 → not in seen → add to seen → seen = {1, 2}, duplicates = {}
-        # num = 3 → not in seen → add to seen → seen = {1, 2, 3}, duplicates = {}
-        # num = 4 → not in seen → add to seen → seen = {1, 2, 3, 4}, duplicates = {}
-
-    if not duplicates:
-        return []
-
-    return duplicates
-
-# Example calls
-print(find_duplicates([1, 2, 3, 4]))  # Expected: [-1]
