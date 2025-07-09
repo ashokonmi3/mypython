@@ -1,7 +1,6 @@
 # Questions to be asked 
 #  👉 “Can I assume the list contains only integers?”
 #  👉 “Any restriction on the datastucture i use ” - 
-#      this program will give o/p in order only
 #  👉 Confirming that duplicate will occure only atmost twice in input” 
 #      if more than 2 it will give n-1 occurance
 #  👉 How much time i have to solve this problem”

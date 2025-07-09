@@ -1,3 +1,4 @@
+# Find the elements that occurs only 2 times 
 # Approach:
 # The goal is to find the numbers in a list that occur exactly two times.
 # 1. Initialize an empty dictionary to store the count of each number.
