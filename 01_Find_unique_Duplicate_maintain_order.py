@@ -57,3 +57,40 @@ print(find_duplicates([1, 2, 4, 2]))
 # Expected output: []
 print(find_duplicates([1, 2, 3, 4]))
 
+# Time Complexity:O(n)
+# Loop Through the List:
+
+# The for loop iterates over each element of the input list nums. In the worst case, it will iterate n times, where n is the length of the list.
+
+# Inside the loop, the operation if num in seen checks whether the element num is present in the seen set, which has a time complexity of O(1) (constant time on average because sets are implemented using hash tables).
+
+# The operation duplicates.append(num) is also O(1), as appending an element to a list takes constant time.
+
+# Therefore, the total time complexity for this function is O(n), 
+# where n is the length of the input list.
+
+# Space Complexity:O(n)
+# Space for seen Set:
+
+# The seen set stores unique numbers as we iterate through the list.
+#  In the worst case, when all elements in the list are unique,
+#  the set will store n elements. So, the space required for the seen set is O(n).
+
+# Space for duplicates List:
+
+# The duplicates list stores only the numbers that appear more than once. In the worst case (if all elements are duplicates), the duplicates list will contain n elements, so the space required for the duplicates list is O(n).
+
+# Therefore, the total space complexity is O(n), where n is the number of elements in the input list.
+
+# Summary of Complexity:
+# Time Complexity: O(n) — We go through the list once, and each operation inside the loop is constant time.
+
+# Space Complexity: O(n) — We store elements in a set and list, both of which can contain at most n elements.
+
+
+
+
+
+
+
+

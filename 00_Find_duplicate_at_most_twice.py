@@ -11,7 +11,7 @@
 # if it is 4 times it will be in out put 3 times
 # this will work on both sorted or unsorted list
 
-# 👉 Approach: I am going to use 2 lists here and iterate through the input
+# 👉 Approach: I am going to use 2 lists here and i will iterate through the input
 # first List for seen element : This will store the numbers we've already encountered
 # while iterating through the list.
 

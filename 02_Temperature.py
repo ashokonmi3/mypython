@@ -7,7 +7,8 @@
 
 # Approach in simple language
 # 👉 “I go through the list of temperatures one day at a time. 
-# I will use use a stack to remember the days where I’m still waiting for a warmer temperature.
+# I will use  a stack to remember the days where I’m still waiting for a warmer temperature.
+# i will take one list answer and initialize all the values with zero in
 # Whenever I find a warmer temperature than a previous day stored on the stack, 
 # I calculate how many days I had to wait by subtracting the indices. 
 # I will fill this value into the result list.
@@ -77,7 +78,8 @@ print(daily_temperatures([73, 80, 72, 75]))  # Expected output: [1, 0, 1, 0]
 
 # Initialization:
 
-# First, I create a list called wait_time that has the same length as the input temperatures list, 
+# First, I create a list called wait_time that has the same length 
+# as the input temperatures list, 
 # and I initialize it with zeroes. This list will store, for each day, 
 # how many days we need to wait until we see a warmer temperature. 
 # If no warmer day comes, the value will remain zero.

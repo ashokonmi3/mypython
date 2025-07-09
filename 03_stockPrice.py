@@ -3,10 +3,10 @@
 #      or can it have zero or negative prices?”
 #  👉 “Is it guaranteed that the list has at least two days of prices,
 #      or do I need to handle empty or one-element lists?”
-#  👉 “Should I return zero profit if no profit is possible, 
-#       or do you want some special output in that case?”
 #  👉 “Is there only one transaction allowed (one buy, one sell), 
 #      or can we buy and sell multiple times?”
+#  👉 “how much time i have to solve this problem , 
+
 
 # 🎤 How to explain the approach
 # 👉 “I scan through the prices one by one. 
@@ -15,7 +15,7 @@
 # If the profit is better than any profit I’ve seen so far, I update my max profit.
 #  I also update my lowest price if today’s price is lower.”
 
-def max_profit(prices):
+def calculate_max_profit(prices):
     """
     Calculates the maximum profit from a single buy-sell transaction.
     Returns 0 if no profit is possible (prices decline or stay same).
@@ -74,7 +74,7 @@ def max_profit(prices):
 
 
 # ✅ Direct function call with hardcoded input
-result = max_profit([7, 1, 5, 3, 6, 4])
+result = calculate_max_profit([7, 1, 5, 3, 6, 4])
 
 # Print final result
 print(f"Maximum profit: {result}")
