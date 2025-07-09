@@ -48,6 +48,21 @@ print(find_values_occurring_twice([1, 2, 4, 2]))  # Expected output: [2]
 # Additional example call to test the function
 print(find_values_occurring_twice([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
 
+
+# Explaination 
+# This Python program identifies and returns the list of numbers that
+#  occur exactly twice in a given list of integers. It starts by initializing an 
+# empty dictionary called count_dict to store each number along with its count. 
+# Then, it loops through the input list nums, and for each number, 
+# it updates its count in the dictionary — incrementing the count if
+#  the number already exists or setting it to 1 if it’s seen for the first time. 
+# After counting all elements, the function initializes an empty list
+#  named result to hold the numbers that appear exactly twice. 
+# It then loops through the dictionary, and if a number's count is 2, 
+# it adds that number to the result list. Finally, 
+# the function returns the result list. 
+
+
 # Iteration Trace for input [1, 2, 4, 2]:
 # count_dict = {}
 # Iteration 1: num = 1 → num is not in count_dict → add count_dict[1] = 1

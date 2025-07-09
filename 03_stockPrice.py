@@ -79,12 +79,28 @@ result = calculate_max_profit([7, 1, 5, 3, 6, 4])
 # Print final result
 print(f"Maximum profit: {result}")
 
+# Explaination 
+# This program is designed to calculate the maximum profit that can be 
+# earned from a single buy-and-sell transaction given a list of daily 
+# stock prices. The logic starts by handling edge cases—if the list is empty or
+# has fewer than two prices, no transaction is possible, so it returns 0. 
+# It then initializes two variables: min_price, which keeps track of the lowest 
+# stock price seen so far (best day to buy), and max_profit,
+# which tracks the highest profit we can make by selling on any
+# day after the minimum price day.
+# Here i am  iterating through the price list from the second day onward. 
+# For each day, it calculates the potential profit by subtracting min_price from the current price. 
+# If this potential profit is greater than the max_profit recorded so far, we update max_profit. 
+# Similarly, if the current price is lower than min_price, we update min_price to reflect the new best buying opportunity. 
+# After going through all the prices, the function returns the highest profit found. 
+
+
 # ✅ Time and space complexity
 # 👉 “Time complexity is O(N) because we go through the list once. 
 # Space complexity is O(1) because we only use two variables — min_price and max_profit.”
 # =========================================
 # [7, 6, 4, 3, 1]
-def max_profit(prices):
+def calculate_max_profit(prices):
     """
     Calculates maximum profit from a single buy-sell transaction.
     Returns 0 if no profit is possible (prices decline or stay same).
@@ -132,13 +148,13 @@ def max_profit(prices):
 
 
 # ✅ Call the function with [7, 6, 4, 3, 1]
-result = max_profit([7, 6, 4, 3, 1])
+result = calculate_max_profit([7, 6, 4, 3, 1])
 
 print(f"Maximum profit: {result}")
 # ==================================
 # [1, 10, 3, 11, 3]
 
-def max_profit(prices):
+def calculate_max_profit(prices):
     """
     Calculates maximum profit from a single buy-sell transaction.
     Returns 0 if no profit is possible.
@@ -196,11 +212,11 @@ def max_profit(prices):
     return max_profit
 
 # ✅ Call with your input
-result = max_profit([1, 10, 3, 11, 3])
+result = calculate_max_profit([1, 10, 3, 11, 3])
 print(f"Maximum profit: {result}")
 # ==============================
 # [3, 5, 10, 2, 5, 10, 1]
-def max_profit(prices):
+def calculate_max_profit(prices):
     """
     Calculates maximum profit from a single buy-sell transaction.
     Returns 0 if no profit is possible.
@@ -261,5 +277,5 @@ def max_profit(prices):
     return max_profit
 
 # ✅ Call with your input
-result = max_profit([3, 5, 10, 2, 5, 10, 1])
+result = calculate_max_profit([3, 5, 10, 2, 5, 10, 1])
 print(f"Maximum profit: {result}")

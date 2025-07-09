@@ -12,7 +12,7 @@ def find_duplicates(nums):
     """
 
     seen = set()         # A set to store numbers we've seen so far (for fast lookup)
-    duplicates = []      # A list to store unique duplicates in order of first appearance
+    duplicates = []      # A list to store unique duplicates in order of first  , the first duplicate will be the first element in result
 
     # Loop through each number in the input list
     for num in nums:

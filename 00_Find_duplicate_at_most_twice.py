@@ -78,8 +78,6 @@ print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
 
 
 
-
-
 # Trace table for input [1, 2, 4, 2]:
 # +------------+---------+----------------+--------------------+---------------------------+-----------------+-------------------+
 # | Iteration  | num     | seen before     | duplicates before   | action                    | seen after       | duplicates after   |
