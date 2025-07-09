@@ -53,7 +53,6 @@ def find_duplicates(nums):
 # Input: [1, 2, 4, 2]
 # Expected output: [2]
 print(find_duplicates([1, 2, 4, 2]))
-
 # Input: [1, 2, 3, 4]
 # Expected output: []
 print(find_duplicates([1, 2, 3, 4]))

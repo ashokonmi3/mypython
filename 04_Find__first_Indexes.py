@@ -39,4 +39,7 @@ def find_first_index(nums, target):
 print(find_first_index([5, 7, 7, 8, 8, 10], 8))
 
 # 🎤 Time and space complexity
-# 👉 “Time complexity is O(N) because in the worst case we may look at every element once. Space complexity is O(1) because we only use a few variables regardless of the input size.”
+# 👉 “Time complexity is O(N) because in the worst case we may 
+# look at every element once.
+#  Space complexity is O(1) because 
+# we only use a few variables regardless of the input size.”
