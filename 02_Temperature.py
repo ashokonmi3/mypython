@@ -4,12 +4,11 @@
 # 3️⃣ Can the input list be empty?
 # 4️⃣ Are negative temperatures possible, or only positive?
 # How much time i have for this 
-
-# Approach in simple language
+# -------------------- APPROACH IN SIMPLE LANGUAGE --------------------
 # 👉 I go through the list of temperatures one day at a time.
 # 👉 I use a list (acting as a stack) to remember the indices of the days 
 #    for which I'm still waiting to find a warmer temperature.
-# 👉 I also create a result list called `wait_time` and initialize all values to 0, 
+# 👉 I also create a result list called `answer` and initialize all values to 0, 
 #    assuming by default that there's no warmer day ahead.
 
 # 👉 As I move through the list:
@@ -17,16 +16,15 @@
 #       (i.e., a previous cooler day), then:
 #         🔹 I pop that index from the stack.
 #         🔹 I calculate how many days I had to wait by subtracting the indices: current_index - previous_index.
-#         🔹 I store that number in the corresponding position in the `wait_time` list.
+#         🔹 I store that number in the corresponding position in the `answer` list.
 
-# 👉 If I don't find a warmer temperature for a day, its value in `wait_time` stays 0,
+# 👉 If I don't find a warmer temperature for a day, its value in `answer` stays 0,
 #    which is fine because I initialized it that way.
 
 # 👉 This approach is efficient because each index is pushed onto the stack once 
 #    and popped at most once — giving us linear time complexity.
 
-
-
+# -------------------- FUNCTION DEFINITION --------------------
 def daily_temperatures(temperatures):
     """
     For each day, calculate how many days you have to wait for a warmer temperature.
@@ -34,81 +32,67 @@ def daily_temperatures(temperatures):
     """
 
     # Initialize result list with 0s (default = no warmer day ahead)
-    wait_time = [0] * len(temperatures)
+    answer = [0] * len(temperatures)
 
     # Stack to store indices of days waiting for a warmer temperature
-    waiting_days = []
+    stack = []
 
     # Iterate through the temperature list using index
     for i in range(len(temperatures)):
         current_temp = temperatures[i]  # Temperature of the current day
 
         # Check if current day is warmer than the top of the stack
-        while waiting_days and current_temp > temperatures[waiting_days[-1]]:
-            prev_day = waiting_days.pop()  # Get the index of the previous cooler day
-            wait_time[prev_day] = i - prev_day  # Calculate wait duration
+        while stack and current_temp > temperatures[stack[-1]]:
+            prev_day = stack.pop()  # Get the index of the previous cooler day
+            answer[prev_day] = i - prev_day  # Calculate wait duration
 
         # Push the current day's index onto the stack
-        waiting_days.append(i)
+        stack.append(i)
 
-# Example trace for input: [73, 74, 72, 75]
-# --------------------------------------------------------
+    # Any index left in the stack had no warmer temperature later, so answer stays 0
+    return answer
+print(daily_temperatures([73, 74, 72, 75]))  # Output: [1, 2, 1, 0]
+
+# -------------------- TRACE EXPLANATION FOR INPUT [73, 74, 72, 75] --------------------
 # Initial state:
 # temperatures = [73, 74, 72, 75]
-# wait_time = [0, 0, 0, 0]  # result list initialized with zeros
-# waiting_days = []         # stack to store indices of unresolved days
+# answer = [0, 0, 0, 0]  # result list initialized with zeros
+# stack = []             # stack to store indices of unresolved days
 
 # Day 0:
 # current_temp = 73
-# waiting_days is empty, so push index 0
-# → waiting_days = [0]
-# → wait_time = [0, 0, 0, 0]
+# stack is empty → push index 0
+# → stack = [0]
+# → answer = [0, 0, 0, 0]
 
 # Day 1:
 # current_temp = 74
-# Compare with top of stack → temperatures[0] = 73
-# 74 > 73 → found a warmer day for day 0
-# → pop index 0 from stack
-# → wait_time[0] = 1 - 0 = 1
-# → push index 1
-# → waiting_days = [1]
-# → wait_time = [1, 0, 0, 0]
+# temperatures[stack[-1]] = 73 < 74 → pop 0 → answer[0] = 1 - 0 = 1
+# push 1 → stack = [1]
+# → answer = [1, 0, 0, 0]
 
 # Day 2:
 # current_temp = 72
-# Compare with top of stack → temperatures[1] = 74
-# 72 <= 74 → not warmer, so push index 2
-# → waiting_days = [1, 2]
-# → wait_time = [1, 0, 0, 0]
+# temperatures[stack[-1]] = 74 > 72 → no pop → push 2 → stack = [1, 2]
+# → answer = [1, 0, 0, 0]
 
 # Day 3:
 # current_temp = 75
-# Compare with top of stack → temperatures[2] = 72
-# 75 > 72 → pop index 2
-# → wait_time[2] = 3 - 2 = 1
-# Compare with new top → temperatures[1] = 74
-# 75 > 74 → pop index 1
-# → wait_time[1] = 3 - 1 = 2
-# → push index 3
-# → waiting_days = [3]
-# → wait_time = [1, 2, 1, 0]
+# temperatures[2] = 72 < 75 → pop 2 → answer[2] = 3 - 2 = 1
+# temperatures[1] = 74 < 75 → pop 1 → answer[1] = 3 - 1 = 2
+# push 3 → stack = [3]
+# → answer = [1, 2, 1, 0]
 
 # Final result:
-# wait_time = [1, 2, 1, 0]
-# → which means:
-# Day 0: wait 1 day for a warmer temp (74)
-# Day 1: wait 2 days for a warmer temp (75)
-# Day 2: wait 1 day for a warmer temp (75)
-# Day 3: no warmer day ahead → 0
+# answer = [1, 2, 1, 0]
+# → Day 0: wait 1 day for 74
+# → Day 1: wait 2 days for 75
+# → Day 2: wait 1 day for 75
+# → Day 3: no warmer day → 0
 
-
-    # Any index left in waiting_days had no warmer temperature later, so wait_time stays 0
-
-    return wait_time
-
-# Example usage
-print(daily_temperatures([73, 74, 72, 75]))  # Expected output: [1, 2, 1, 0]
-print(daily_temperatures([73, 80, 72, 75]))  # Expected output: [1, 0, 1, 0]
+# -------------------- EXAMPLE USAGE --------------------
+print(daily_temperatures([73, 74, 72, 75]))  # Output: [1, 2, 1, 0]
+print(daily_temperatures([73, 80, 72, 75]))  # Output: [1, 0, 1, 0]
 
 
         
@@ -181,6 +165,51 @@ print(daily_temperatures([73, 80, 72, 75]))  # Expected output: [1, 0, 1, 0]
 #   Also, the answer list is of size N.
 
 # =========================
+# print(daily_temperatures([73, 80, 72, 75]))  # Output: [1, 0, 1, 0]
+
+# -------------------- TRACE EXPLANATION FOR INPUT [73, 80, 72, 75] --------------------
+# Initial state:
+# temperatures = [73, 80, 72, 75]
+# answer       = [0, 0, 0, 0]  # result initialized to 0s
+# stack        = []           # stack holds indices of unresolved temps
+
+# Day 0 (i=0):
+# current_temp = 73
+# stack is empty → push 0
+# stack = [0]
+# answer = [0, 0, 0, 0]
+
+# Day 1 (i=1):
+# current_temp = 80
+# compare with temperatures[stack[-1]] = temperatures[0] = 73
+# 80 > 73 → pop 0 → answer[0] = 1 (1 - 0)
+# push 1
+# stack = [1]
+# answer = [1, 0, 0, 0]
+
+# Day 2 (i=2):
+# current_temp = 72
+# compare with temperatures[stack[-1]] = temperatures[1] = 80
+# 72 < 80 → not warmer → push 2
+# stack = [1, 2]
+# answer = [1, 0, 0, 0]
+
+# Day 3 (i=3):
+# current_temp = 75
+# compare with temperatures[stack[-1]] = temperatures[2] = 72
+# 75 > 72 → pop 2 → answer[2] = 1 (3 - 2)
+# compare with temperatures[stack[-1]] = temperatures[1] = 80
+# 75 < 80 → stop
+# push 3
+# stack = [1, 3]
+# answer = [1, 0, 1, 0]
+
+# Final state:
+# stack = [1, 3] → these had no warmer days ahead → their answer stays 0
+# Final answer = [1, 0, 1, 0]
+
+# -------------------- EXAMPLE USAGE --------------------
+
 # improved solution 
 
 def daily_temperatures(temperatures):
