@@ -24,7 +24,7 @@
 # 👉 This approach is efficient because each index is pushed onto the stack once 
 #    and popped at most once — giving us linear time complexity.
 
-# -------------------- FUNCTION DEFINITION --------------------
+# -------------------- FUNCTION DEFINITION --------------------0
 def daily_temperatures(temperatures):
     """
     For each day, calculate how many days you have to wait for a warmer temperature.
