@@ -1,88 +1,98 @@
-# The name of this workflow. It will appear in the GitHub Actions UI.
+# The name of this workflow. This name appears in the GitHub Actions UI.
 name: Basic CI Pipeline
 
-# Define when this workflow should run.
+# The 'on' section tells GitHub when to trigger this workflow.
 on:
-  # Run this workflow when code is pushed.
+  # This workflow will be triggered by a push event...
   push:
-    # Only run on the main branch.
+    # ...but only when the push is to the 'main' branch.
     branches:
       - main
 
-# Define the jobs that will run as part of this workflow.
+# The 'jobs' section defines one or more jobs that will run as part of this workflow.
 jobs:
-  # This is our single job named build-and-test.
+  # Define a job called 'build-and-test' that runs all our build and test steps.
   build-and-test:
-    # Specify that this job runs on GitHub's Ubuntu runner.
+    # 'runs-on' specifies the type of machine/runner to use, here the latest Ubuntu.
     runs-on: ubuntu-latest
 
-    # List of steps to perform in this job.
+    # 'steps' is a list of the sequential commands or actions that will be executed.
     steps:
       # Step 1: Checkout code from the repository.
       - name: Checkout code
-        # Use the official GitHub Action to checkout code.
+        # Uses the official GitHub Action to check out the source code.
         uses: actions/checkout@v4
 
-      # Step 2: Set up Python environment.
+      # Step 2: Set up the Python environment.
       - name: Set up Python
-        # Use the official Python setup action.
+        # Uses GitHub's official action for setting up Python.
         uses: actions/setup-python@v5
         with:
-          # Specify Python version to use.
+          # 'python-version' defines which version of Python to use for this job.
           python-version: '3.11'
 
       # Step 3: Install project dependencies.
       - name: Install dependencies
-        # Use shell commands to install dependencies.
+        # The 'run' command lets you execute shell commands.
         run: |
-          # Install packages listed in requirements.txt.
+          # Here we install all required Python packages from requirements.txt.
           pip install -r requirements.txt
 
       # Step 4: Build the application.
       - name: Build application
-        # Run commands that build or package the application.
         run: |
-          # Simulate build step (replace with actual build commands).
+          # This is a placeholder build command.
+          # It simulates a build by creating a directory for build artifacts.
           echo "Building the app..."
-          # Example: create a directory for build artifacts.
           mkdir build-output
-          # Example: create a dummy artifact file.
+          # Create a dummy file inside the build-output directory.
           echo "Build artifact content" > build-output/artifact.txt
 
-      # Step 5: Run tests.
-      - name: Run tests
-        # Run the test commands (e.g., pytest).
-        run: |
-          # Run test suite.
-          pytest
+      # Step 5: Run Unit Tests.
+      - name: Run Unit Tests
+        # Here we run unit tests located in the 'tests/unit' folder.
+        run: pytest tests/unit
 
-      # Step 6: Upload test results (optional).
+      # Step 6: Run Integration Tests.
+      - name: Run Integration Tests
+        # Here we run integration tests located in the 'tests/integration' folder.
+        run: pytest tests/integration
+
+      # Step 7: Run Functional Tests.
+      - name: Run Functional Tests
+        # Run tests that check application features in 'tests/functional'.
+        run: pytest tests/functional
+
+      # Step 8: Run Regression Tests.
+      - name: Run Regression Tests
+        # Run regression tests from the 'tests/regression' folder.
+        run: pytest tests/regression
+
+      # Step 9: Upload test results.
       - name: Upload test results
-        # Use the GitHub Action to upload artifacts.
+        # This uses the official upload artifact action to store the test results.
         uses: actions/upload-artifact@v4
         with:
-          # Name of the artifact shown in the Actions UI.
+          # 'name' gives the artifact a label in the GitHub Actions UI.
           name: test-results
-          # Path to the files to upload (adjust as needed).
-          path: .  # Update path if you generate test result files
+          # 'path' specifies the file or directory to upload.
+          # Here it is set to the current directory, adjust if results are stored elsewhere.
+          path: .
 
-# 👉 “This YAML file defines a simple Continuous Integration pipeline using GitHub Actions. The workflow is called ‘Basic CI Pipeline’ — this is the name that will show up in the GitHub Actions dashboard when the workflow runs.
+  # Define a separate job for deployment to the staging environment.
+  deploy-to-staging:
+    # 'needs' indicates this job will only run after 'build-and-test' completes successfully.
+    needs: build-and-test
+    # Again, use GitHub's Ubuntu runner for this job.
+    runs-on: ubuntu-latest
 
-# 👉 The pipeline is set up to trigger automatically when code is pushed to the main branch. It could easily be expanded to include other branches or pull requests if needed.
+    steps:
+      # Step 1: Checkout code again in this separate job.
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-# 👉 The pipeline defines a single job called build-and-test, and this job runs on GitHub’s hosted Ubuntu environment — specifically, the latest version of Ubuntu that GitHub provides.
-
-# 👉 The job consists of several steps. The first step checks out the repository code so that the runner has access to the latest version of our source code.
-
-# 👉 The second step sets up Python 3.11 on the runner. This ensures that we have the right version of Python installed to build and test our application.
-
-# 👉 The third step installs our project’s dependencies by running pip install -r requirements.txt. This reads the requirements file and installs any Python packages that are needed.
-
-# 👉 Next, we have a build step. In this placeholder example, it just creates a directory and generates a dummy artifact file, but in a real project this is where we would run actual build commands — for example, packaging the app, creating distribution files, or compiling code.
-
-# 👉 After the build, the pipeline runs our tests. This is done using Pytest, which will execute any tests defined in the codebase and report on their success or failure.
-
-# 👉 Finally, the pipeline uploads the test results as an artifact. This means that the results are saved and made available for download from the GitHub Actions interface, so they can be reviewed or shared later.
-
-# 👉 Overall, this is a basic but functional CI pipeline that automates key steps like code checkout, environment setup, dependency installation, building the app, running tests, and saving the results. It provides a solid starting point that can be expanded with additional features like integration tests, deployment, notifications, or reporting.”
-
+      # Step 2: Simulate deployment to staging.
+      - name: Simulate deployment to staging
+        # Here we simply run a command to simulate deployment.
+        # In a real pipeline, you would run your deployment commands or scripts.
+        run: echo "Deploying to staging environment..."
