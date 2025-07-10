@@ -1,7 +1,9 @@
 # 🎤 Questions to ask before coding
 # 👉 “Is the list guaranteed to be sorted, or can it be unsorted?”
-# 👉 “What should I return if the target isn’t found — [-1, -1] okay?”
+# 👉 “What should I return if the target isn’t found — [-1, -1] okay?” [Ask only if not provided in input]
 # 👉 “Is it possible to have multiple instances of the target?”
+# 👉 How much time i have to solve this problem
+
 
 #🎤 Approach in simple language
 #👉 “I loop through the list with a basic index-based loop. 

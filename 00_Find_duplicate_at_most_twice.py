@@ -116,38 +116,3 @@ print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
 # in this case seen.append() will be changed to seen.add()
 # # =======================
 
-
-# def find_duplicates(nums):
-#     """
-#     This function finds duplicate elements in a list of integers using a dictionary.
-#     If no duplicates are found, it returns [].
-    
-#     Parameters:
-#     nums (List[int]): The input list to check for duplicates.
-    
-#     Returns:
-#     List[int]: A list containing the duplicates found or [] if none found.
-#     """
-
-#     count_dict = {}    # This dictionary will store the count of each number.
-#     duplicates = []    # This list will store numbers that are duplicates.
-
-#     # Loop through each number in the input list
-#     for num in nums:
-#         # If the number is already in the dictionary, it's a duplicate
-#         if num in count_dict:
-#             count_dict[num] += 1
-#             # Add to duplicates list only if it has appeared more than once
-#             if count_dict[num] == 2:
-#                 duplicates.append(num)
-#         else:
-#             # If the number is not in the dictionary, add it with count 1
-#             count_dict[num] = 1
-
-#             # {1:1,2:2,4:1}
-
-#     # Return the duplicates list
-#     return duplicates
-
-# # Example calls
-# print(find_duplicates([1, 2, 4, 2]))  # Expected output: [2]

@@ -62,7 +62,7 @@ print(find_duplicates([1, 2, 3, 4]))
 # For each element, it performs constant-time operations on the seen set (like checking membership or adding elements).
 # Additionally, before adding a duplicate to the duplicates list,
 # it checks whether that duplicate is already present in the list. 
-# While this check takes linear time in the worst case, the number of actual duplicates (k) 
+# While this check takes linear time in the worst case, the number of actual duplicates
 # is usually small compared to the total number of elements. 
 # Therefore, for most practical inputs, the function runs in linear time, or O(n), where n is the length of the input list.
 

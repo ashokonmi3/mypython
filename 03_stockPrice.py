@@ -78,26 +78,54 @@ result = calculate_max_profit([7, 1, 5, 3, 6, 4])
 
 # Print final result
 print(f"Maximum profit: {result}")
+# =================
+# Explaination
+# ✅ Function: calculate_max_profit(prices)
+# This function helps us find the maximum profit we can make by buying and selling a stock once.
+# We are given a list of prices, where each element represents the price of the stock on that day.
+# Step 1: Check if the prices list is empty or has only one price.
+# We need at least two prices — one to buy and one to sell.
+# If there are not enough prices, we return 0 as no profit can be made.
 
-# Explaination 
-# This program is designed to calculate the maximum profit that can be 
-# earned from a single buy-and-sell transaction given a list of daily 
-# stock prices. The logic starts by handling edge cases—if the list is empty or
-# has fewer than two prices, no transaction is possible, so it returns 0. 
-# It then initializes two variables: min_price, which keeps track of the lowest 
-# stock price seen so far (best day to buy), and max_profit,
-# which tracks the highest profit we can make by selling on any
-# day after the minimum price day.
-# Here i am  iterating through the price list from the second day onward. 
-# For each day, it calculates the potential profit by subtracting min_price from the current price. 
-# If this potential profit is greater than the max_profit recorded so far, we update max_profit. 
-# Similarly, if the current price is lower than min_price, we update min_price to reflect the new best buying opportunity. 
-# After going through all the prices, the function returns the highest profit found. 
+# Step 2: Assume we buy the stock on the first day.
+# So, we store the first price as the minimum price seen so far (min_price).
 
+# Step 3: We also set the initial maximum profit to 0, since we haven't made any transaction yet.
 
-# ✅ Time and space complexity
-# 👉 “Time complexity is O(N) because we go through the list once. 
-# Space complexity is O(1) because we only use two variables — min_price and max_profit.”
+# Step 4: Now we start checking from the second day onwards.
+# For each day, we calculate how much profit we would make if we bought at min_price and sold today.
+# If the profit is greater than our current max_profit, we update max_profit.
+# If today’s price is lower than our current min_price, we update min_price.
+# This helps us always have the lowest buy price and the best profit opportunity.
+
+# Step 5: After checking all the prices, we return the highest profit found.
+# If no profit was possible (prices kept going down), it returns 0.
+# ✅ Time and Space Complexity (explained in simple language):
+
+# 👉 Time Complexity: O(N)
+# N is the number of days — or the number of elements in the prices list.
+# We look at each day's price only one time in a single loop.
+# We do not use any nested loops or go back again.
+# So the time taken grows linearly with the number of days.
+# That’s why the time complexity is called "O(N)" — one operation per element.
+
+# 👉 Example:
+# If there are 5 prices, we do 5 steps.
+# If there are 100 prices, we do 100 steps.
+# We process each price once — nothing more.
+
+# 👉 Space Complexity: O(1)
+# This means the amount of memory (space) used does not grow with the input size.
+# We only use two variables — min_price and max_profit — no matter how long the list is.
+# We are not storing any extra lists or data structures.
+# So the space used stays constant, even if the input list is huge.
+
+# 🧠 Summary:
+# Time Complexity = O(N) → fast and efficient
+# Space Complexity = O(1) → uses very little memory
+
+# O(1) = Fixed work or memory, no matter how big the input is.
+# O(N) = Work or memory grows with the size of the input.
 # =========================================
 # [7, 6, 4, 3, 1]
 def calculate_max_profit(prices):
