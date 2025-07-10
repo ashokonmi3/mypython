@@ -56,47 +56,84 @@ import time        # We import time so we can pause between operations
 def adb_reboot_simple(times):
     """
     Reboots the device 'times' number of times and checks if boot is completed.
+    Also calculates the percentage of successful reboots.
     """
+    successful_reboots = 0  # Track the number of successful reboots
 
     # Loop through the number of times we want to reboot
     for i in range(times):
         print(f"\nReboot {i + 1} of {times}")  # Print which reboot attempt we are on
 
-        # Send the ADB reboot command
+        # Step 1: Send the ADB reboot command
         # This will restart the connected device
         subprocess.run(["adb", "reboot"])
         print("Device is rebooting...")  # Inform the user
 
-        # Wait 2 seconds before we start checking device status
-        # This gives the device time to actually start rebooting
+        # Step 2: Wait for the device to come back online after rebooting
+        # We wait for 2 seconds before checking device status to allow time for reboot
         time.sleep(2)
 
-        # Run adb wait-for-device command
-        # This will block (pause) until the device comes back online and ADB can see it
+        # Step 3: Run adb wait-for-device command to ensure the device is back online
         subprocess.run(["adb", "wait-for-device"])
         print("Device is back online.")  # Inform the user
 
-        # Now check if the device has completed booting
-        # We run adb shell getprop sys.boot_completed
+        # Step 4: Check if the device has completed booting
+        # Run adb shell getprop sys.boot_completed command
         # This returns "1" if boot is done, or "0" (or empty) if still booting
         result = subprocess.run(
-            ["adb", "shell", "getprop", "sys.boot_completed"],  # Command we run on the device
-            capture_output=True,  # Capture what the command prints so we can check it
-            text=True  # Make sure we get the output as a string, not bytes
+            ["adb", "shell", "getprop", "sys.boot_completed"],  # Command to check boot status
+            capture_output=True,  # Capture output of the command
+            text=True  # Get output as a string (instead of bytes)
         )
 
-        # Clean up the output: remove spaces or newlines
+        # Step 5: Clean up the output (remove spaces or newlines)
         status = result.stdout.strip()
 
-        # Check the status and print the result
+        # Step 6: Check the boot status and update success count
         if status == "1":
             print("Reboot successful.")  # Device booted successfully
+            successful_reboots += 1  # Increment successful reboot count
         else:
             print("Device boot not completed yet.")  # Device still booting or something went wrong
+
+    # Step 7: Calculate the success percentage after all reboots
+    success_percentage = (successful_reboots / times) * 100
+
+    # Step 8: Output the success rate as a percentage
+    print(f"\nSuccess Rate: {success_percentage:.2f}%")  # Print the success rate
 
 # ✅ Call the function — this will reboot the device 2 times
 adb_reboot_simple(2)
 # ===============
+# Approach:
+# 1. **Initialization**:
+#    - We initialize a counter called `successful_reboots` to 0. This will track the number of reboots that are successful (i.e., when the device finishes booting).
+
+# 2. **Reboot Process**:
+#    - **Step 1: Reboot Command**: 
+#        - For each reboot attempt, we send the ADB reboot command (`adb reboot`) to restart the device.
+#        - This step initiates the reboot process on the connected device.
+#    - **Step 2: Wait for Device**: 
+#        - After sending the reboot command, we wait for 2 seconds to allow the device to begin the reboot process.
+#    - **Step 3: Device Online Check**:
+#        - We then use `adb wait-for-device` to make sure the device comes back online. This is important to ensure the device is reachable after reboot.
+#    - **Step 4: Check Boot Completion**:
+#        - We run the command `adb shell getprop sys.boot_completed` to check the device's boot status.
+#        - The command returns:
+#          - `"1"`: Boot is complete, meaning the device has finished rebooting.
+#          - `"0"` or empty: Boot is still in progress, or there was an issue.
+#  
+# 3. **Tracking Success**:
+#    - If the boot status is `"1"`, we increment the `successful_reboots` counter to track a successful reboot.
+#    - If the boot status is `"0"` or empty, the reboot was not successful, and no increment happens.
+
+# 4. **Success Rate Calculation**:
+#    - After completing all the reboot attempts, we calculate the success rate:
+#        - Formula: `Success Rate = (successful_reboots / total_reboots) * 100`
+#        - This gives the percentage of successful reboots out of the total number of attempts.
+
+# 5. **Output**:
+#    - Finally, we print the success rate as a percentage to the user, showing how many times the reboot process was completed successfully.
 
 
 # ---
