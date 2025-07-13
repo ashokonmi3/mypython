@@ -13,12 +13,9 @@ name: Basic CI Pipeline
 # The cron syntax runs the workflow at 12:00 AM and 12:00 PM UTC every day.
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs at 12:00 AM UTC every day
-    - cron: '0 12 * * *'  # Runs at 12:00 PM UTC every day
-  push:
-    branches:
-      - main  # Triggers the workflow when changes are pushed to the 'main' branch.
-
+    - cron: '30 4 * * *'  # Runs at 4:30 AM UTC (10:00 AM IST) - Good overlap for US East Coast / India
+    - cron: '30 14 * * *'  # Runs at 2:30 PM UTC (8:00 PM IST) - Good overlap for US East Coast / India
+ 
 # The 'jobs' section defines the various jobs that will run as part of the workflow.
 jobs:
   # Job for setting up the environment
@@ -49,7 +46,7 @@ jobs:
 
     steps:
       # Step 1: Build the application (after the setup job completes)
-      - name: Build the application
+      - name: Build the application # here we create the diffetnet builds andriod, ios apletv, etc)
         run: |
           echo "Building the app..."  # Simulate building the app.
           mkdir build-output  # Create an output directory where the build artifact will be saved.
