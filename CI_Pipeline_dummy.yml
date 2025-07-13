@@ -1,107 +1,108 @@
-Dev pipeline -->      QA Pipeline ------------------------------->   Staging Pipeline --->          Ready for certificaion production
-Build unit test       Build and unit test in parallel                e2e|load|performance||api|
-Smoke                 functional || integration || regression test   
+Dev pipeline -->          QA Pipeline ------------------------------->   Staging Pipeline --->          Ready for certificaion production
+Build unit test           Build and unit test in parallel                e2e|load|performance||api|
+Smoke || sanity ||unit    functional || integration || regression test   
 Sanity                        
 Unit test
 Feature test
 (specific to bug or regression)
 
 
-# The name of this workflow. This name appears in the GitHub Actions UI.
 name: Basic CI Pipeline
 
-# The 'on' section tells GitHub when to trigger this workflow.
+# This section specifies when the workflow will be triggered. 
+# The cron syntax runs the workflow at 12:00 AM and 12:00 PM UTC every day.
 on:
-  # This workflow will be triggered by a push event...
+  schedule:
+    - cron: '0 0 * * *'  # Runs at 12:00 AM UTC every day
+    - cron: '0 12 * * *'  # Runs at 12:00 PM UTC every day
   push:
-    # ...but only when the push is to the 'main' branch.
     branches:
-      - main
+      - main  # Triggers the workflow when changes are pushed to the 'main' branch.
 
-# The 'jobs' section defines one or more jobs that will run as part of this workflow.
+# The 'jobs' section defines the various jobs that will run as part of the workflow.
 jobs:
-  # Define a job called 'build-and-test' that runs all our build and test steps.
-  build-and-test:
-    # 'runs-on' specifies the type of machine/runner to use, here the latest Ubuntu.
-    runs-on: ubuntu-latest
+  # Job for setting up the environment
+  setup:
+    runs-on: ubuntu-latest  # Specifies the OS that the job will run on, in this case, the latest Ubuntu version.
 
-    # 'steps' is a list of the sequential commands or actions that will be executed.
+    # Steps in this job will be executed sequentially
     steps:
-      # Step 1: Checkout code from the repository.
+      # Step 1: Checkout the code from the repository
       - name: Checkout code
-        # Uses the official GitHub Action to check out the source code.
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # This action checks out the repository's code so it can be accessed by the following steps.
 
-      # Step 2: Set up the Python environment.
+      # Step 2: Set up the Python environment for the job
       - name: Set up Python
-        # Uses GitHub's official action for setting up Python.
-        uses: actions/setup-python@v5
+        id: python  # Assigns an ID to the step for referencing.
+        uses: actions/setup-python@v5  # This action sets up Python in the runner.
         with:
-          # 'python-version' defines which version of Python to use for this job.
-          python-version: '3.11'
+          python-version: '3.11'  # Specifies the version of Python to be used (Python 3.11 in this case).
 
-      # Step 3: Install project dependencies.
+      # Step 3: Install dependencies listed in the 'requirements.txt' file
       - name: Install dependencies
-        # The 'run' command lets you execute shell commands.
-        run: |
-          # Here we install all required Python packages from requirements.txt.
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt  # This command installs the dependencies required for your project.
 
-      # Step 4: Build the application.
-      - name: Build application
-        run: |
-          # This is a placeholder build command.
-          # It simulates a build by creating a directory for build artifacts.
-          echo "Building the app..."
-          mkdir build-output
-          # Create a dummy file inside the build-output directory.
-          echo "Build artifact content" > build-output/artifact.txt
-
-      # Step 5: Run Unit Tests.
-      - name: Run Unit Tests
-        # Here we run unit tests located in the 'tests/unit' folder.
-        run: pytest tests/unit
-
-      # Step 6: Run Integration Tests.
-      - name: Run Integration Tests
-        # Here we run integration tests located in the 'tests/integration' folder.
-        run: pytest tests/integration
-
-      # Step 7: Run Functional Tests.
-      - name: Run Functional Tests
-        # Run tests that check application features in 'tests/functional'.
-        run: pytest tests/functional
-
-      # Step 8: Run Regression Tests.
-      - name: Run Regression Tests
-        # Run regression tests from the 'tests/regression' folder.
-        run: pytest tests/regression
-
-      # Step 9: Upload test results.
-      - name: Upload test results
-        # This uses the official upload artifact action to store the test results.
-        uses: actions/upload-artifact@v4
-        with:
-          # 'name' gives the artifact a label in the GitHub Actions UI.
-          name: test-results
-          # 'path' specifies the file or directory to upload.
-          # Here it is set to the current directory, adjust if results are stored elsewhere.
-          path: .
-
-  # Define a separate job for deployment to the staging environment.
-  deploy-to-staging:
-    # 'needs' indicates this job will only run after 'build-and-test' completes successfully.
-    needs: build-and-test
-    # Again, use GitHub's Ubuntu runner for this job.
-    runs-on: ubuntu-latest
+  # Job for Build
+  build:
+    runs-on: ubuntu-latest  # This job will also run on the latest Ubuntu version.
+    needs: setup  # This ensures that the 'build' job will only run after the 'setup' job completes.
 
     steps:
-      # Step 1: Checkout code again in this separate job.
-      - name: Checkout code
-        uses: actions/checkout@v4
+      # Step 1: Build the application (after the setup job completes)
+      - name: Build the application
+        run: |
+          echo "Building the app..."  # Simulate building the app.
+          mkdir build-output  # Create an output directory where the build artifact will be saved.
+          echo "Build artifact content" > build-output/artifact.txt  # Save the build artifact (simulated content) in the directory.
 
-      # Step 2: Simulate deployment to staging.
+  # Job for Unit Tests (Runs in parallel with the Build job)
+  unit-tests:
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu version.
+    needs: setup  # This ensures the unit-test job runs after the 'setup' job completes.
+
+    steps:
+      # Step 1: Run Unit Tests
+      - name: Run Unit Tests
+        run: pytest tests/unit  # This command runs unit tests located in the 'tests/unit' directory.
+
+  # Job for Functional Tests (Runs after the Build job completes)
+  functional-tests:
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu version.
+    needs: [setup, build]  # This ensures functional tests will run after both 'setup' and 'build' jobs are completed.
+
+    steps:
+      # Step 1: Run Functional Tests
+      - name: Run Functional Tests
+        run: pytest tests/functional  # Runs functional tests located in the 'tests/functional' directory.
+
+  # Job for Integration Tests (Runs after the Build job completes)
+  integration-tests:
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu version.
+    needs: [setup, build]  # Ensures that integration tests only run after the setup and build jobs are complete.
+
+    steps:
+      # Step 1: Run Integration Tests
+      - name: Run Integration Tests
+        run: pytest tests/integration  # Runs integration tests located in the 'tests/integration' directory.
+
+  # Job for Regression Tests (Runs after the Build job completes)
+  regression-tests:
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu version.
+    needs: [setup, build]  # Ensures that regression tests only run after the setup and build jobs are completed.
+
+    steps:
+      # Step 1: Run Regression Tests
+      - name: Run Regression Tests
+        run: pytest tests/regression  # Runs regression tests located in the 'tests/regression' directory.
+
+  # Job for Deployment to Staging (Runs after all test jobs)
+  deploy-to-staging:
+    needs: [build, unit-tests, functional-tests, integration-tests, regression-tests]  # Ensures deployment happens after all tests.
+    runs-on: ubuntu-latest  # Runs on the latest Ubuntu version.
+
+    steps:
+      # Step 1: Simulate deployment to staging environment
       - name: Simulate deployment to staging
-        # Here we simply run a command to simulate deployment.
-        # In a real pipeline, you would run your deployment commands or scripts.
-        run: echo "Deploying to staging environment..."
+        run: |
+          echo "Deploying to staging environment..."  # This is a placeholder to simulate the deployment process. 
+          # In a real pipeline, you would replace this with your actual deployment commands.
