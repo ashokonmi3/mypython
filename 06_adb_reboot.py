@@ -86,24 +86,22 @@ def adb_reboot_simple(times):
             text=True  # Get output as a string (instead of bytes)
         )
 
-        # Step 5: Clean up the output (remove spaces or newlines)
-        status = result.stdout.strip()
-
-        # Step 6: Check the boot status and update success count
-        if status == "1":
+        # Step 5: Check if the output contains '1' (indicating boot is complete)
+        if "1" in result.stdout:  # If '1' is found anywhere in the output
             print("Reboot successful.")  # Device booted successfully
             successful_reboots += 1  # Increment successful reboot count
         else:
             print("Device boot not completed yet.")  # Device still booting or something went wrong
 
-    # Step 7: Calculate the success percentage after all reboots
+    # Step 6: Calculate the success percentage after all reboots
     success_percentage = (successful_reboots / times) * 100
 
-    # Step 8: Output the success rate as a percentage
+    # Step 7: Output the success rate as a percentage
     print(f"\nSuccess Rate: {success_percentage:.2f}%")  # Print the success rate
 
 # ✅ Call the function — this will reboot the device 2 times
-adb_reboot_simple(2)
+adb_reboot_simple(10)
+
 # ===============
 # Approach:
 # 1. **Initialization**:
