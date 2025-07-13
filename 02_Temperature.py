@@ -12,10 +12,12 @@
 #    assuming by default that there's no warmer day ahead.
 
 # 👉 As I move through the list:
-#     - If the current day's temperature is warmer than the temperature on top of the stack
+#     - If the current day's temperature is warmer than the temperature on 
+#       top of the stack
 #       (i.e., a previous cooler day), then:
 #         🔹 I pop that index from the stack.
-#         🔹 I calculate how many days I had to wait by subtracting the indices: current_index - previous_index.
+#         🔹 I calculate how many days I had to wait by subtracting the indices:
+#            current_index - previous_index.
 #         🔹 I store that number in the corresponding position in the `answer` list.
 
 # 👉 If I don't find a warmer temperature for a day, its value in `answer` stays 0,
@@ -54,7 +56,8 @@ def daily_temperatures(temperatures):
 print(daily_temperatures([73, 74, 72, 75]))  # Output: [1, 2, 1, 0]
 # ==============
 #first iteration i= 0, current_temp=73, stack=[0], answer=[0,0,0,0]
-#2nd iteration , i=1 , current_temp=74, 74>73, prev_day=0, answer[0]=1-0=1 --> answer=[1,0,0,0], stack=[1],i=2
+#2nd iteration , i=1 , current_temp=74, 74>73, prev_day=0, answer[0]=1-0=1 
+# --> answer=[1,0,0,0], stack=[1],i=2
 #3rd iteration,i=2, current_temp=72, 72>74, stack =[1,2] , i=3, answer= [1,0,0,0]
 #4th iteration,i=3, current_temp=75 > 72
                     # prev_day =2
@@ -111,36 +114,53 @@ print(daily_temperatures([73, 80, 72, 75]))  # Output: [1, 0, 1, 0]
 # Explanation of the daily_temperatures Code:
 
 # 1. Initialization:
-# - The function takes an input list 'temperatures', where each element represents the temperature of a particular day.
-# - A list called 'answer' is initialized with the same length as 'temperatures', filled with zeroes.
-#   This will store, for each day, how many days you need to wait for a warmer temperature.
+# - The function takes an input list 'temperatures', where each element represents
+#  the temperature of a particular day.
+# - A list called 'answer' is initialized with the same length as 
+#   'temperatures', filled with zeroes.
+#   This will store, for each day, how many days you need to wait for 
+#    a warmer temperature.
 #   If no warmer day is ahead, the value remains 0.
 
 # 2. Using a Stack to Track Days Waiting for Warmer Temperatures:
-# - A stack (a list) called 'stack' is used to keep track of the indices of days that are waiting for a warmer temperature.
-# - The stack helps track which days have been processed but haven't yet found a warmer temperature.
-# - During each iteration, the temperature of the current day is compared to the temperature of the day stored at the top of the stack.
+# - A stack (a list) called 'stack' is used to keep track of the indices
+#    of days that are waiting for a warmer temperature.
+# - The stack helps track which days have been processed 
+#   but haven't yet found a warmer temperature.
+# - During each iteration, the temperature of the current 
+#   day is compared to the temperature of the day stored at the top of the stack.
 
 # 3. Checking for Warmer Day:
-# - If the current day's temperature is warmer than the one at the top of the stack, it means the current day provides a warmer temperature for the day at the top of the stack.
-# - The index of that cooler day is popped from the stack, and the wait time is calculated by subtracting the positions (i - prev_day).
-# - The corresponding index in the 'answer' list is updated with this value, representing how many days the cooler day had to wait for a warmer temperature.
+# - If the current day's temperature is warmer than the 
+#  one at the top of the stack, it means the current day provides a 
+#  warmer temperature for the day at the top of the stack.
+# - The index of that cooler day is popped from the stack, 
+#   and the wait time is calculated by subtracting the positions (i - prev_day).
+# - The corresponding index in the 'answer' list is updated with this value,
+#   representing how many days the cooler day had to wait for a warmer temperature.
 
 # 4. Repeat the Process:
-# - The process continues in a while loop as long as there are indices in the stack and the current day's temperature is warmer than the one at the top of the stack.
-# - For each condition, the cooler day's index is popped from the stack, and the wait time is updated in the 'answer' list.
+# - The process continues in a while loop as long as there are indices 
+#   in the stack and the current day's temperature is warmer than the one at the top of the stack.
+# - For each condition, the cooler day's index is popped from the stack, 
+#   and the wait time is updated in the 'answer' list.
 
 # 5. Adding the Current Day's Index to the Stack:
 # - After checking for warmer days, the current day's index is added to the stack.
-# - This allows the current day to "wait" for a warmer temperature in subsequent iterations.
+# - This allows the current day to "wait" for a warmer temperature
+#    in subsequent iterations.
 
 # 6. Handling Days with No Warmer Temperature:
-# - At the end of the loop, any index left in the stack did not find a warmer temperature ahead.
-# - For these days, their corresponding value in the 'answer' list remains 0, indicating that there is no warmer day ahead for them.
+# - At the end of the loop, any index left in the stack did not
+#   find a warmer temperature ahead.
+# - For these days, their corresponding value in the 'answer' list remains 0,
+#   indicating that there is no warmer day ahead for them.
 
 # 7. Returning the Result:
-# - The 'answer' list is returned, containing how many days each day had to wait for a warmer temperature.
-# - If a day did not find a warmer temperature, its value remains 0 in the 'answer' list.
+# - The 'answer' list is returned, containing how many days each day
+#   had to wait for a warmer temperature.
+# - If a day did not find a warmer temperature, its value remains
+#   0 in the 'answer' list.
 
 # Example:
 # Input: [73, 74, 72, 75]

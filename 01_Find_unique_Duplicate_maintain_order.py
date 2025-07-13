@@ -12,13 +12,13 @@ def find_duplicates(nums):
     """
 
     seen = set()         # A set to store numbers we've seen so far (for fast lookup)
-    duplicates = []      # A list to store unique duplicates in order of first  , the first duplicate will be the first element in result
+    duplicates = []      # A list to store unique duplicates in order of first  ,
+    # the first duplicate will be the first element in result
 
     # Loop through each number in the input list
     for num in nums:
         if num in seen:
-            # If num is already in seen set, it's a duplicate
-            if num not in duplicates:
+                # If num is already in seen set, it's a duplicate
                 # Add to duplicates list only if not already added
                 duplicates.append(num)
         else:
@@ -33,7 +33,8 @@ def find_duplicates(nums):
         # Iteration 3: num = 4
         #   4 not in seen -> add 4 to seen -> seen = {1, 2, 4}, duplicates = []
         # Iteration 4: num = 2
-        #   2 in seen -> 2 not in duplicates -> add 2 to duplicates -> seen = {1, 2, 4}, duplicates = [2]
+        #   2 in seen -> 2 not in duplicates -> add 2 to duplicates -> 
+        #   seen = {1, 2, 4}, duplicates = [2]
 
         # Trace for input [1, 2, 3, 4]:
         # Iteration 1: num = 1
@@ -59,20 +60,26 @@ print(find_duplicates([1, 2, 3, 4]))
 
 # ⏱ Time Complexity: O(n)
 # The function iterates through each element in the input list nums exactly once.
-# For each element, it performs constant-time operations on the seen set (like checking membership or adding elements).
+# For each element, it performs constant-time operations on the seen
+#  set (like checking membership or adding elements).
 # Additionally, before adding a duplicate to the duplicates list,
 # it checks whether that duplicate is already present in the list. 
-# While this check takes linear time in the worst case, the number of actual duplicates
+# While this check takes linear time in the worst case, the number 
+# of actual duplicates
 # is usually small compared to the total number of elements. 
-# Therefore, for most practical inputs, the function runs in linear time, or O(n), where n is the length of the input list.
+# Therefore, for most practical inputs, the function runs in linear
+#  time, or O(n), where n is the length of the input list.
 
 # 💾 Space Complexity: O(n)
-# The function uses two additional data structures: a set called seen and a list called duplicates.
+# The function uses two additional data structures: a set called seen
+#  and a list called duplicates.
 # The seen set stores all unique elements encountered so far
-# and can grow up to the size of the input in the worst case (if all elements are unique). 
+# and can grow up to the size of the input in the worst case 
+# (if all elements are unique). 
 # The duplicates list stores only the values that appear more than once,
 # which in the worst case could also grow up to size n (though that's rare).
-# Therefore, the overall space used by the function is proportional to the size of the input, making the space complexity O(n).
+# Therefore, the overall space used by the function is proportional to the 
+# size of the input, making the space complexity O(n).
 
 
 

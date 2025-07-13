@@ -1,7 +1,8 @@
 # 🎤 Questions to ask before coding
-# 👉 “Is the list guaranteed to be sorted, or can it be unsorted?”
-# 👉 “What should I return if the target isn’t found — [-1, -1] okay?” [Ask only if not provided in input]
-# 👉 “Is it possible to have multiple instances of the target?”
+# 👉 “Is the list guaranteed to be sorted, or can it be unsorted?” 
+#     This wil work for unsorted as well
+# 👉 “What should I return if the target isn’t found — [-1, -1] okay?” 
+# [Ask only if not provided in input]
 # 👉 How much time i have to solve this problem
 
 
@@ -49,14 +50,19 @@ def find_first_last_indices(nums, target):
 # Example calls
 print(find_first_last_indices([5, 7, 7, 8, 8, 10], 8))  # Expected: [3, 4]
 print(find_first_last_indices([5, 7, 7, 8, 8, 10], 6))  # Expected: [-1, -1]
+print(find_first_last_indices([5, 8,7, 7, 8, 8, 10], 8))  # Expected: [1, 5]
 
 # 🎤 Time complexity
-# 👉 “The time complexity is O(N), where N is the number of elements in the list.
-#  This is because we go through the list once from start to end, checking each element exactly once.”
+# 👉 “The time complexity is O(N), where N is the number of 
+# elements in the list.
+#  This is because we go through the list once from start to end, 
+# checking each element exactly once.”
 
 # 🎤 Space complexity
-# 👉 “The space complexity is O(1) because we only use a few variables (first_index, last_index) 
-# regardless of the input size. We don’t use any extra data structures that grow with the input.”
+# 👉 “The space complexity is O(1) because we only use a few variables
+#  (first_index, last_index) 
+# regardless of the input size. We don’t use any extra data structures 
+# that grow with the input.”
 # =================================
 # [5, 7, 7, 8, 8, 10], target = 6:
 
@@ -84,7 +90,8 @@ def find_first_last_indices(nums, target):
             if first_index == -1:
                 first_index = i  # Set first_index to current index
 
-            # Update last_index to current index (will keep updating as we find more occurrences)
+            # Update last_index to current index (will keep updating as we
+            #  find more occurrences)
             last_index = i
 
         # Example trace for [5, 7, 7, 8, 8, 10], target = 6:

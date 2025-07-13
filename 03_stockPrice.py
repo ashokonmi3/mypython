@@ -81,8 +81,10 @@ print(f"Maximum profit: {result}")
 # =================
 # Explaination
 # ✅ Function: calculate_max_profit(prices)
-# This function helps us find the maximum profit we can make by buying and selling a stock once.
-# We are given a list of prices, where each element represents the price of the stock on that day.
+# This function helps us find the maximum profit we can make
+#  by buying and selling a stock once.
+# We are given a list of prices, where each element represents the 
+# price of the stock on that day.
 # Step 1: Check if the prices list is empty or has only one price.
 # We need at least two prices — one to buy and one to sell.
 # If there are not enough prices, we return 0 as no profit can be made.
@@ -90,10 +92,12 @@ print(f"Maximum profit: {result}")
 # Step 2: Assume we buy the stock on the first day.
 # So, we store the first price as the minimum price seen so far (min_price).
 
-# Step 3: We also set the initial maximum profit to 0, since we haven't made any transaction yet.
+# Step 3: We also set the initial maximum profit to 0,
+#  since we haven't made any transaction yet.
 
 # Step 4: Now we start checking from the second day onwards.
-# For each day, we calculate how much profit we would make if we bought at min_price and sold today.
+# For each day, we calculate how much profit we would make if 
+# we bought at min_price and sold today.
 # If the profit is greater than our current max_profit, we update max_profit.
 # If today’s price is lower than our current min_price, we update min_price.
 # This helps us always have the lowest buy price and the best profit opportunity.
@@ -116,7 +120,8 @@ print(f"Maximum profit: {result}")
 
 # 👉 Space Complexity: O(1)
 # This means the amount of memory (space) used does not grow with the input size.
-# We only use two variables — min_price and max_profit — no matter how long the list is.
+# We only use two variables — min_price and max_profit — no matter
+#  how long the list is.
 # We are not storing any extra lists or data structures.
 # So the space used stays constant, even if the input list is huge.
 

@@ -10,18 +10,21 @@
 # if 3 times it is there it will in out put 2 times
 # if it is 4 times it will be in out put 3 times
 # this will work on both sorted or unsorted list
-
+# go slow little start 
 # 👉 Approach: I am going to use 2 lists here and i will iterate through the input
-# first List for seen element : This will store the numbers we've already encountered
+# first List for seen element : This will store the numbers we've already
+#  encountered
 # while iterating through the list.
-
-# second List duplicates for storing the duplicate: This will store the numbers that are 
+# let me think
+# second List duplicates for storing the duplicate: This will store
+#  the numbers that are 
 # repeated (i.e., the duplicates).
 
 # For each element in the list, check if it’s already in the seen list:
 # If it is, add it to the duplicates list.
 # If it’s not, add it to the seen list.
-# Finally, i will return the duplicates list. If no duplicates are found, return [].
+# Finally, i will return the duplicates list. 
+# If no duplicates are found, return [].
 
 def find_duplicates(nums):
     """
@@ -70,7 +73,8 @@ def find_duplicates(nums):
 # Example calls
 print(find_duplicates([1, 2, 4, 2]))  # Expected output: [2]
 print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
-# print(find_duplicates([1,2,2,3,2,4,5,4]))  # Expected output: [2,2,4] (it will give multiple time as our req is to have max 2 element)
+# print(find_duplicates([1,2,2,3,2,4,5,4]))  # Expected output: [2,2,4] 
+# (it will give multiple time as our req is to have max 2 element)
 
 
 
@@ -107,11 +111,17 @@ print(find_duplicates([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
 # So overall, the space used is O(N)
 # 
 # Improvement
-#I would replace the seen list with a set because checking if a number is in a set is very fast —
-#  it takes the same short time no matter how big the set is. But with a list, 
-# the program has to look through each item one by one, so it takes longer as the list gets bigger. Using a set would make the program work faster, especially if we have a lot of numbers.
+#I would replace the seen list with a set because checking 
+# if a number is in a set is very fast —
+#  it takes the same short time no matter how big the set is.
+#  But with a list, 
+# the program has to look through each item one by one,
+#  so it takes longer as the list gets bigger. Using a 
+# set would make the program work faster, especially
+#  if we have a lot of numbers.
 # Checking membership in a set is O(1) on average,
-#  while checking in a list is O(N). This change would make the program much more efficient, 
+#  while checking in a list is O(N). 
+# This change would make the program much more efficient, 
 #  especially for large lists.
 # in this case seen.append() will be changed to seen.add()
 # # =======================

@@ -3,7 +3,8 @@
 # The goal is to find the numbers in a list that occur exactly two times.
 # 1. Initialize an empty dictionary to store the count of each number.
 # 2. Loop through the input list and count how many times each number appears.
-# 3. Once we have the count of each number, loop through the dictionary and find the numbers that have a count of exactly 2.
+# 3. Once we have the count of each number, loop through the dictionary 
+# and find the numbers that have a count of exactly 2.
 # 4. Store those numbers in a list and return the list as the result.
 
 def find_values_occurring_twice(nums):
@@ -34,7 +35,8 @@ def find_values_occurring_twice(nums):
     
     # Step 4: Loop through the dictionary to check counts
     for num in count_dict:
-        if count_dict[num] == 2:
+        if count_dict[num] == 2: # if count_dict[num] > 1: to find all duplicate 
+
             # If the count is 2, append the number to the result list
             result.append(num)
     
@@ -46,7 +48,8 @@ def find_values_occurring_twice(nums):
 print(find_values_occurring_twice([1, 2, 4, 2]))  # Expected output: [2]
 
 # Additional example call to test the function
-print(find_values_occurring_twice([1, 2, 3, 4]))  # Expected output: [] (no duplicates)
+print(find_values_occurring_twice([1, 2, 3, 4]))  #
+# Expected output: [] (no duplicates)
 
 
 # Explaination 
@@ -101,12 +104,19 @@ print(find_values_occurring_twice([1, 2, 3, 4]))  # Expected output: [] (no dupl
 # Final result: []
 
 # Time Complexity:
-# 1. Counting occurrences: The loop that counts the occurrences takes O(n) time, where n is the length of the list.
-# 2. Finding elements with exactly 2 occurrences: The loop that checks the dictionary also takes O(m) time, where m is the number of unique elements in the dictionary (in practice, m <= n).
-# Therefore, the overall time complexity is O(n), as both loops run sequentially and at most we will loop through the list and dictionary.
+# 1. Counting occurrences: The loop that counts the occurrences takes O(n) time,
+#  where n is the length of the list.
+# 2. Finding elements with exactly 2 occurrences:
+#  The loop that checks the dictionary also takes O(m) time, 
+# where m is the number of unique elements in the dictionary (in practice, m <= n).
+# Therefore, the overall time complexity is O(n), 
+# as both loops run sequentially and at most we will loop 
+# through the list and dictionary.
 #
 # Space Complexity:
-# 1. The dictionary stores counts for each unique element, which takes O(n) space in the worst case (if all elements are unique).
-# 2. The result list will contain a subset of elements, which is also O(n) in the worst case (if all elements appear exactly 2 times).
+# 1. The dictionary stores counts for each unique element, 
+# which takes O(n) space in the worst case (if all elements are unique).
+# 2. The result list will contain a subset of elements,
+#  which is also O(n) in the worst case (if all elements appear exactly 2 times).
 # Thus, the space complexity is O(n).
 

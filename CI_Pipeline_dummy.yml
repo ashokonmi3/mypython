@@ -1,3 +1,12 @@
+Dev pipeline -->      QA Pipeline ------------------------------->   Staging Pipeline --->          Ready for certificaion production
+Build unit test       Build and unit test in parallel                e2e|load|performance||api|
+Smoke                 functional || integration || regression test   
+Sanity                        
+Unit test
+Feature test
+(specific to bug or regression)
+
+
 # The name of this workflow. This name appears in the GitHub Actions UI.
 name: Basic CI Pipeline
 

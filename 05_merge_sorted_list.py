@@ -8,7 +8,7 @@
 #  (Could save space if in-place is allowed.)
 
 # 🟣 How much time i have to solve this problem
-
+# but thery are sorted
 
 # ✅ Approach (in simple language for interview):
 # I start by comparing the first elements of both sorted lists.
@@ -16,7 +16,8 @@
 # Then I move to the next element in the list from which I picked the value.
 # I continue this process until I reach the end of one of the lists.
 # Once one list is finished, I simply add the remaining elements from the other list.
-# Because the original lists are sorted, the final result is also sorted without needing extra sorting.
+# Because the original lists are sorted, the final result is also sorted without 
+# needing extra sorting.
 
 def merge_sorted_lists(list1, list2):
     """
@@ -37,8 +38,8 @@ def merge_sorted_lists(list1, list2):
             merged.append(list2[j])  # Add smaller or equal element from list2
             j += 1  # Move to next element in list2
 
-        # 🔄 Example trace for list1 = [1, 2, 4], list2 = [1, 3, 4]
-        # Initial: i=0, j=0 → list1[0]=1, list2[0]=1 → take list2[0]=1 → merged=[1] → i=0, j=1
+ # 🔄 Example trace for list1 = [1, 2, 4], list2 = [1, 3, 4]
+ # Initial: i=0, j=0 → list1[0]=1, list2[0]=1 → take list2[0]=1 → merged=[1] → i=0, j=1
         # Step 2: i=0, j=1 → list1[0]=1, list2[1]=3 → take list1[0]=1 → merged=[1,1] → i=1, j=1
         # Step 3: i=1, j=1 → list1[1]=2, list2[1]=3 → take list1[1]=2 → merged=[1,1,2] → i=2, j=1
         # Step 4: i=2, j=1 → list1[2]=4, list2[1]=3 → take list2[1]=3 → merged=[1,1,2,3] → i=2, j=2
