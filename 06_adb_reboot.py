@@ -38,7 +38,6 @@
 # 👉 for this program we may need to run the multiple adb commands
 #  Do we need to handle success/failure for each adb command or only reboot attempt?
 
-# 👉 What should the program do if the reboot fails? Should it retry or stop?
 # =======================
 # Approch
 # “My approach would be to reboot the device using adb reboot,
