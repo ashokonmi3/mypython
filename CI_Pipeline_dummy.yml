@@ -1,9 +1,7 @@
 Dev pipeline -->          QA Pipeline ------------------------------->   Staging Pipeline --->          Ready for certificaion production
-Build unit test           Build and unit test in parallel                e2e|load|performance||api|
-Smoke || sanity ||unit    functional || integration || regression test   
-Sanity                        
-Unit test
-Feature test
+Build || unit test           Build and unit test in parallel                e2e|load|performance||api|
+Smoke || sanity ||    functional || integration || regression test   
+Feature/bug test        P0            P0             P0
 (specific to bug or regression)
 
 

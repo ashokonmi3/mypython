@@ -34,11 +34,9 @@
 # # ✅ Kernel logs, might show boot or hardware issues
 # ==========================
 # Question  to be asked
-# 👉 Do we want to reboot the device just once, or multiple times? Should the number of reboots be configurable?
 
-# 👉 After rebooting, do we only need to check if the device is online, or also confirm that it has finished booting (sys.boot_completed)?
-
-# 👉 Do we need to report success/failure for each reboot attempt, or only at the end?
+# 👉 for this program we may need to run the multiple adb commands
+#  Do we need to handle success/failure for each adb command or only reboot attempt?
 
 # 👉 What should the program do if the reboot fails? Should it retry or stop?
 # =======================
