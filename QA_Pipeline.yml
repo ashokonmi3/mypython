@@ -1,3 +1,136 @@
+name: Basic CI Pipeline  # Name of the workflow shown in GitHub Actions
+
+on:
+  schedule:              # Schedule to run the pipeline automatically
+    - cron: '30 4 * * *'   # Run every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'  # Run every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:      # Allow manual triggering from GitHub UI
+
+jobs:
+  setup:              #  Setup environment
+  build:              #  Build the application
+  unit-tests:         #  Run unit tests
+  functional-tests:   #  Run functional tests
+  integration-tests:  #  Run integration tests
+  regression-tests:   #  Run regression tests
+  deploy-to-staging:  #  Deploy to staging
+
+# ===================================
+# Add runs on for all 
+name: Basic CI Pipeline  # Name of the workflow shown in GitHub Actions
+
+on:
+  schedule:              # Schedule to run the pipeline automatically
+    - cron: '30 4 * * *'   # Run every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'  # Run every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:      # Allow manual triggering from GitHub UI
+
+jobs:
+  setup:                  # Setup environment
+    runs-on: ubuntu-latest
+
+  build:                  # Build the application
+    runs-on: ubuntu-latest
+
+  unit-tests:             # Run unit tests
+    runs-on: ubuntu-latest
+
+  functional-tests:       # Run functional tests
+    runs-on: ubuntu-latest
+
+  integration-tests:      # Run integration tests
+    runs-on: ubuntu-latest
+
+  regression-tests:       # Run regression tests
+    runs-on: ubuntu-latest
+
+  deploy-to-staging:      # Deploy to staging
+    runs-on: ubuntu-latest
+# =================================
+# Add steps 
+name: Basic CI Pipeline  # Name of the workflow shown in GitHub Actions
+
+on:  # Triggers section to define when this workflow runs
+  schedule:  # Run the pipeline automatically based on time
+    - cron: '30 4 * * *'     # Run every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'    # Run every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:         # Allow manual triggering from GitHub UI
+
+jobs:  # Define all the jobs (tasks) that will run in this pipeline
+
+  setup:  # Job 1: Prepare environment (e.g., checkout code, install tools)
+    runs-on: ubuntu-latest  # Use GitHub-hosted runner with latest Ubuntu
+    steps:  # Define the list of steps in the setup job
+      - name: Checkout code  # Step 1: Pull the source code from the repo
+      - name: Set up Python  # Step 2: Set up the programming environment (e.g., Python)
+      - name: Install dependencies  # Step 3: Install project dependencies
+
+  build:  # Job 2: Build the application
+    runs-on: ubuntu-latest  # Run on latest Ubuntu runner
+    steps:
+      - name: Build application  # Step: Build code into deployable format (APK, binary, etc.)
+
+  unit-tests:  # Job 3: Run unit tests to check individual functions/modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Unit Tests  # Step: Execute unit tests (typically fastest)
+
+  functional-tests:  # Job 4: Run functional tests to validate business workflows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Functional Tests  # Step: Execute end-to-end functional scenarios
+
+  integration-tests:  # Job 5: Run integration tests to verify component interactions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Integration Tests  # Step: Test how modules work together (e.g., UI + API)
+
+  regression-tests:  # Job 6: Run regression tests to confirm nothing broke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Regression Tests  # Step: Full test suite to catch old bugs resurfacing
+
+  deploy-to-staging:  # Job 7: Deploy to a staging environment after tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Staging  # Step: Simulate or perform deployment to staging server
+
+
+# ==================
+# Add needs for 
+name: Basic CI Pipeline  # Name of the pipeline (appears in the GitHub Actions UI)
+
+on:  # Triggers to start the workflow
+  schedule:  # Schedule the pipeline to run automatically
+    - cron: '30 4 * * *'     # Runs every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'    # Runs every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:  # Allows manual triggering of the workflow via GitHub UI
+
+jobs:  # Start defining all jobs in this workflow
+
+  setup:  # Job: Setup environment (first job in the pipeline)
+    runs-on: ubuntu-latest  # Use GitHub-hosted latest Ubuntu runner
+    steps:  # List of steps to execute in this job
+      - name: Checkout code  # Step 1: Checkout source code from the repository
+      - name: Set up Python  # Step 2: Setup Python environment
+      - name: Install dependencies  # Step 3: Install required packages (e.g., pip install)
+
+  build:  # Job: Build the application
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: setup  # This job depends on completion of the 'setup' job
+    steps:
+      - name: Build application  # Step: Compile or package the application code
+
+  unit-tests:  # Job: Run unit tests
+    runs-on: ubuntu-latest
+    needs: setup  # This job also depends on 'setup' (can
+
+# =====================
+
+
+# ==========================
+# Added run 
+
 name: QA CI Pipeline  # Name of the workflow shown in GitHub Actions UI
 
 on:  # Start of trigger conditions
@@ -21,7 +154,7 @@ jobs:  # Define all the jobs in the workflow
         #   python-version: '3.11'  # Choose the version of Python you need
 
       - name: Install dependencies  # Step 3: (Optional) Install required packages
-        # run: pip install -r requirements.txt  # Uncomment to install packages from requirements.txt
+        run: pip install -r requirements.txt  # Uncomment to install packages from requirements.txt
 
   build:  # Job 2: Build the application
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
