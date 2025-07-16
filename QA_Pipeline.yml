@@ -106,7 +106,7 @@ jobs:  # Start defining all jobs in this workflow
   build:  # Job: Build the application
     runs-on: ubuntu-latest  # Use Ubuntu runner
     steps:
-      - name: Checkout code , install dependency
+      - name: Checkout code , install dependency 
       - name: Build application  # Step: Compile or package the application code
 
   unit-tests:  # Job: Run unit tests
