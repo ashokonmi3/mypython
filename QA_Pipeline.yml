@@ -1,4 +1,4 @@
-name: Basic CI Pipeline  # Name of the workflow shown in GitHub Actions
+name: MAX QA CI Pipeline  # Name of the workflow shown in GitHub Actions
 
 on:
   schedule:              # Schedule to run the pipeline automatically
