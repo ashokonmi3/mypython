@@ -7,7 +7,6 @@ on:
   workflow_dispatch:      # Allow manual triggering from GitHub UI
 
 jobs:
-  setup:              #  Setup environment
   build:              #  Build the application
   unit-tests:         #  Run unit tests
   functional-tests:   #  Run functional tests
@@ -26,9 +25,7 @@ on:
   workflow_dispatch:      # Allow manual triggering from GitHub UI
 
 jobs:
-  setup:                  # Setup environment
-    runs-on: ubuntu-latest
-
+  
   build:                  # Build the application
     runs-on: ubuntu-latest
 
@@ -58,36 +55,34 @@ on:  # Triggers section to define when this workflow runs
 
 jobs:  # Define all the jobs (tasks) that will run in this pipeline
 
-  setup:  # Job 1: Prepare environment (e.g., checkout code, install tools)
-    runs-on: ubuntu-latest  # Use GitHub-hosted runner with latest Ubuntu
-    steps:  # Define the list of steps in the setup job
-      - name: Checkout code  # Step 1: Pull the source code from the repo
-      - name: Set up Python  # Step 2: Set up the programming environment (e.g., Python)
-      - name: Install dependencies  # Step 3: Install project dependencies
-
   build:  # Job 2: Build the application
     runs-on: ubuntu-latest  # Run on latest Ubuntu runner
     steps:
+      - name: Checkout code , install dependency
       - name: Build application  # Step: Build code into deployable format (APK, binary, etc.)
 
   unit-tests:  # Job 3: Run unit tests to check individual functions/modules
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code , install dependency
       - name: Run Unit Tests  # Step: Execute unit tests (typically fastest)
 
   functional-tests:  # Job 4: Run functional tests to validate business workflows
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code , install dependency
       - name: Run Functional Tests  # Step: Execute end-to-end functional scenarios
 
   integration-tests:  # Job 5: Run integration tests to verify component interactions
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code , install dependency
       - name: Run Integration Tests  # Step: Test how modules work together (e.g., UI + API)
 
   regression-tests:  # Job 6: Run regression tests to confirm nothing broke
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code , install dependency
       - name: Run Regression Tests  # Step: Full test suite to catch old bugs resurfacing
 
   deploy-to-staging:  # Job 7: Deploy to a staging environment after tests
@@ -107,23 +102,42 @@ on:  # Triggers to start the workflow
   workflow_dispatch:  # Allows manual triggering of the workflow via GitHub UI
 
 jobs:  # Start defining all jobs in this workflow
-
-  setup:  # Job: Setup environment (first job in the pipeline)
-    runs-on: ubuntu-latest  # Use GitHub-hosted latest Ubuntu runner
-    steps:  # List of steps to execute in this job
-      - name: Checkout code  # Step 1: Checkout source code from the repository
-      - name: Set up Python  # Step 2: Setup Python environment
-      - name: Install dependencies  # Step 3: Install required packages (e.g., pip install)
-
+  
   build:  # Job: Build the application
     runs-on: ubuntu-latest  # Use Ubuntu runner
-    needs: setup  # This job depends on completion of the 'setup' job
     steps:
+      - name: Checkout code , install dependency
       - name: Build application  # Step: Compile or package the application code
 
   unit-tests:  # Job: Run unit tests
     runs-on: ubuntu-latest
-    needs: setup  # This job also depends on 'setup' (can
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Unit Tests  # Step: Execute unit tests (typically fastest)
+
+  
+  functional-tests:
+    runs-on: ubuntu-latest
+    needs: [build, unit-tests]
+    steps:
+     - name: Checkout code , install dependency
+     - name: Run Functional Tests  # Step: Execute end-to-end functional scenarios
+
+  
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: [build, unit-tests]
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Integration Tests  # Step: Test how modules work together (e.g., UI + API)
+
+
+  regression-tests:
+    runs-on: ubuntu-latest
+    needs: [build, unit-tests]
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Regression Tests  # Step: Full test suite to catch old bugs resurfacing
 
 # =====================
 
@@ -140,64 +154,55 @@ on:  # Start of trigger conditions
   workflow_dispatch:  # Allow the workflow to be manually triggered from the GitHub UI
 
 jobs:  # Define all the jobs in the workflow
-
-  setup:  # Job 1: Setup job to prepare the environment
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner provided by GitHub
-
-    steps:  # List of steps to run in the setup job
-      - name: Checkout code  # Step 1: Get the source code from your repository
-        uses: actions/checkout@v4  # Official GitHub Action to check out the code
-
-      - name: Set up Python  # Step 2: (Optional) Set up a specific Python version
-        # uses: actions/setup-python@v5  # Uncomment to use Python setup action
-        # with:  # Configuration options for Python setup
-        #   python-version: '3.11'  # Choose the version of Python you need
-
-      - name: Install dependencies  # Step 3: (Optional) Install required packages
-        run: pip install -r requirements.txt  # Uncomment to install packages from requirements.txt
-
+  
   build:  # Job 2: Build the application
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
-    needs: setup  # This job runs only after the 'setup' job finishes
-
     steps:  # Steps in the build job
+      - name: Checkout code , install dependency
       - name: Build application  # Step 1: Simulate or run actual build process
         run: |  # Run a multi-line shell script
           echo "Building Android, iOS, TV apps..."  # Print a message to the console
           mkdir build-output  # Create a folder to store build output
           echo "Build complete" > build-output/app.txt  # Create a dummy build file
+# ------------------------
 
   unit-tests:  # Job 3: Run unit tests
     runs-on: ubuntu-latest  # Use Ubuntu runner
-    needs: setup  # Run this only after setup is finished
 
     steps:  # Steps to run unit tests
+      - name: Checkout code , install dependency
       - name: Run Unit Tests  # Step 1: Run test scripts inside the tests/unit folder
         run: pytest tests/unit  # Use pytest to run unit tests
-
+# ------------------------
   functional-tests:  # Job 4: Run functional tests
     runs-on: ubuntu-latest  # Use Ubuntu runner
-    needs: [setup, build]  # This job depends on both setup and build jobs
+    needs: [build,unit test]  # This job depends on both setup and build jobs
 
     steps:  # Steps to run functional tests
+      - name: Checkout code , install dependency
       - name: Run Functional Tests  # Step 1: Execute functional test suite
         run: pytest tests/functional  # Run functional tests using pytest
+# ------------------------
 
   integration-tests:  # Job 5: Run integration tests
     runs-on: ubuntu-latest  # Use Ubuntu runner
-    needs: [setup, build]  # Wait for both setup and build jobs
+    needs: [unit test, build]  # Wait for both setup and build jobs
 
     steps:  # Steps to run integration tests
+      - name: Checkout code , install dependency
       - name: Run Integration Tests  # Step 1: Execute integration test cases
         run: pytest tests/integration  # Run integration tests using pytest
+# ------------------------
 
   regression-tests:  # Job 6: Run regression tests
     runs-on: ubuntu-latest  # Use Ubuntu runner
-    needs: [setup, build]  # Wait for setup and build jobs to finish
+    needs: [unit test, build]  # Wait for setup and build jobs to finish
 
     steps:  # Steps to run regression tests
-      - name: Run Regression Tests  # Step 1: Execute full regression test suite
-        run: pytest tests/regression  # Run regression tests using pytest
+            - name: Checkout code , install dependency
+            - name: Run Regression Tests  # Step 1: Execute full regression test suite
+            - run: pytest tests/regression  # Run regression tests using pytest
+# ------------------------
 
   deploy-to-staging:  # Job 7: Deploy to staging environment
     runs-on: ubuntu-latest  # Use Ubuntu runner
@@ -206,3 +211,4 @@ jobs:  # Define all the jobs in the workflow
     steps:  # Steps to deploy to staging
       - name: Deploy to Staging  # Step 1: Simulate deployment (replace with actual commands)
         run: echo "Deploying to staging environment..."  # Print deployment message (placeholder)
+# ------------------------
