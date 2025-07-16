@@ -1,0 +1,75 @@
+name: QA CI Pipeline  # Name of the workflow shown in GitHub Actions UI
+
+on:  # Start of trigger conditions
+  schedule:  # This section defines scheduled runs (using cron syntax)
+    - cron: '30 4 * * *'  # Run every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'  # Run every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:  # Allow the workflow to be manually triggered from the GitHub UI
+
+jobs:  # Define all the jobs in the workflow
+
+  setup:  # Job 1: Setup job to prepare the environment
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner provided by GitHub
+
+    steps:  # List of steps to run in the setup job
+      - name: Checkout code  # Step 1: Get the source code from your repository
+        uses: actions/checkout@v4  # Official GitHub Action to check out the code
+
+      - name: Set up Python  # Step 2: (Optional) Set up a specific Python version
+        # uses: actions/setup-python@v5  # Uncomment to use Python setup action
+        # with:  # Configuration options for Python setup
+        #   python-version: '3.11'  # Choose the version of Python you need
+
+      - name: Install dependencies  # Step 3: (Optional) Install required packages
+        # run: pip install -r requirements.txt  # Uncomment to install packages from requirements.txt
+
+  build:  # Job 2: Build the application
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    needs: setup  # This job runs only after the 'setup' job finishes
+
+    steps:  # Steps in the build job
+      - name: Build application  # Step 1: Simulate or run actual build process
+        run: |  # Run a multi-line shell script
+          echo "Building Android, iOS, TV apps..."  # Print a message to the console
+          mkdir build-output  # Create a folder to store build output
+          echo "Build complete" > build-output/app.txt  # Create a dummy build file
+
+  unit-tests:  # Job 3: Run unit tests
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: setup  # Run this only after setup is finished
+
+    steps:  # Steps to run unit tests
+      - name: Run Unit Tests  # Step 1: Run test scripts inside the tests/unit folder
+        run: pytest tests/unit  # Use pytest to run unit tests
+
+  functional-tests:  # Job 4: Run functional tests
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: [setup, build]  # This job depends on both setup and build jobs
+
+    steps:  # Steps to run functional tests
+      - name: Run Functional Tests  # Step 1: Execute functional test suite
+        run: pytest tests/functional  # Run functional tests using pytest
+
+  integration-tests:  # Job 5: Run integration tests
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: [setup, build]  # Wait for both setup and build jobs
+
+    steps:  # Steps to run integration tests
+      - name: Run Integration Tests  # Step 1: Execute integration test cases
+        run: pytest tests/integration  # Run integration tests using pytest
+
+  regression-tests:  # Job 6: Run regression tests
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: [setup, build]  # Wait for setup and build jobs to finish
+
+    steps:  # Steps to run regression tests
+      - name: Run Regression Tests  # Step 1: Execute full regression test suite
+        run: pytest tests/regression  # Run regression tests using pytest
+
+  deploy-to-staging:  # Job 7: Deploy to staging environment
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: [build, unit-tests, functional-tests, integration-tests, regression-tests]  # Wait for all test jobs to finish
+
+    steps:  # Steps to deploy to staging
+      - name: Deploy to Staging  # Step 1: Simulate deployment (replace with actual commands)
+        run: echo "Deploying to staging environment..."  # Print deployment message (placeholder)

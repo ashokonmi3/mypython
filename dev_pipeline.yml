@@ -1,0 +1,72 @@
+name: Parallel Dev Pipeline
+
+# This section defines when the pipeline should run
+on:
+  push:
+    branches: [dev]           # Trigger when code is pushed to 'dev' branch
+  workflow_dispatch:          # Allow manual trigger from GitHub UI
+
+jobs:
+
+  ####################################
+  # 🔧 SETUP JOB
+  ####################################
+  setup:
+    runs-on: ubuntu-latest     # Run this job on the latest Ubuntu runner
+    steps:
+      - name: Checkout Code    # Step 1: Pull the latest code from the repo
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: echo "Installing Python, npm, or required libraries..." 
+        # You can replace with pip/npm/yarn commands
+
+  ####################################
+  # 🛠️ BUILD JOB – Runs in Parallel
+  ####################################
+  build:
+    runs-on: ubuntu-latest
+    needs: setup               # This job depends on the 'setup' job
+    steps:
+      - name: Build the Application
+        run: |
+          echo "Building app for Android, iOS, Roku, Apple TV..."
+          mkdir build-output
+          echo "Simulated build binary" > build-output/app.bin
+        # Replace this with your actual build commands
+
+  ####################################
+  # ✅ UNIT TEST JOB – Runs in Parallel
+  ####################################
+  unit-tests:
+    runs-on: ubuntu-latest
+    needs: setup               # Also depends on 'setup' and runs parallel to 'build'
+    steps:
+      - name: Run Unit Tests
+        run: |
+          echo "Running unit tests..."
+          pytest tests/unit   # Replace with your test framework
+
+  ####################################
+  # 🚦 SMOKE TEST JOB – Waits for Build + Unit Tests
+  ####################################
+  smoke-tests:
+    runs-on: ubuntu-latest
+    needs: [build, unit-tests]   # Depends on both build and unit-tests
+    steps:
+      - name: Run Smoke Tests
+        run: |
+          echo "Running smoke tests..."
+          pytest tests/smoke
+
+  ####################################
+  # 🧠 SANITY TEST JOB – Waits for Build + Unit Tests
+  ####################################
+  sanity-tests:
+    runs-on: ubuntu-latest
+    needs: [build, unit-tests]   # Also depends on build and unit tests
+    steps:
+      - name: Run Sanity Tests
+        run: |
+          echo "Running sanity tests..."
+          pytest tests/sanity
