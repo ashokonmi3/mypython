@@ -101,3 +101,77 @@ jobs:
         run: |
           echo "Deploying to staging environment..."  # This is a placeholder to simulate the deployment process. 
           # In a real pipeline, you would replace this with your actual deployment commands.
+
+# =========================
+Here’s a simplified version of your pipeline in steps:
+
+### GitHub Actions CI Pipeline
+
+#### 1. **Triggering the Workflow:**
+
+* Runs twice a day:
+
+  * 4:30 AM UTC (10:00 AM IST)
+  * 2:30 PM UTC (8:00 PM IST)
+* Uses **cron** to schedule these times.
+
+#### 2. **Setup Job:**
+
+* **Runs on:** `ubuntu-latest`
+* **Steps:**
+
+  1. **Checkout Code:** Get the code from the repository.
+  2. **Set up Python (3.11):** Install Python for the job.
+  3. **Install Dependencies:** Install required packages from `requirements.txt`.
+
+#### 3. **Build Job:**
+
+* **Runs on:** `ubuntu-latest`
+* **Needs:** Runs after **setup** job.
+* **Steps:**
+
+  1. **Build App:** Simulate app build and create output directory.
+
+#### 4. **Unit Tests Job:**
+
+* **Runs on:** `ubuntu-latest`
+* **Needs:** Runs after **setup** job.
+* **Steps:**
+
+  1. **Run Unit Tests:** Run unit tests using `pytest`.
+
+#### 5. **Functional Tests Job:**
+
+* **Runs on:** `ubuntu-latest`
+* **Needs:** Runs after **setup** and **build** jobs.
+* **Steps:**
+
+  1. **Run Functional Tests:** Run functional tests using `pytest`.
+
+#### 6. **Integration Tests Job:**
+
+* **Runs on:** `ubuntu-latest`
+* **Needs:** Runs after **setup** and **build** jobs.
+* **Steps:**
+
+  1. **Run Integration Tests:** Run integration tests using `pytest`.
+
+#### 7. **Regression Tests Job:**
+
+* **Runs on:** `ubuntu-latest`
+* **Needs:** Runs after **setup** and **build** jobs.
+* **Steps:**
+
+  1. **Run Regression Tests:** Run regression tests using `pytest`.
+
+#### 8. **Deploy to Staging Job:**
+
+* **Runs on:** `ubuntu-latest`
+* **Needs:** Runs after **build**, **unit-tests**, **functional-tests**, **integration-tests**, and **regression-tests**.
+* **Steps:**
+
+  1. **Deploy to Staging:** Simulate deployment to a staging environment.
+
+---
+
+This setup runs jobs sequentially (after dependencies) and in parallel (for tests) to speed up the feedback process.

@@ -36,7 +36,8 @@
 # Question  to be asked
 
 # 👉 for this program we may need to run the multiple adb commands
-#  Do we need to handle success/failure for each adb command or only reboot attempt?
+#  Do we need to handle success/failure for each adb command or only reboot attempt or i can write 
+# simple code to check reboot?
 
 # =======================
 # Approch
@@ -69,7 +70,11 @@ def adb_reboot_simple(times):
         # Step 2: Wait for the device to come back online after rebooting
         # We wait for 2 seconds before checking device status to allow time for reboot
         time.sleep(2)
+# By adding a short delay (sleep(2)), you:
 
+# Give the device some time to properly shut down and start its reboot sequence.
+
+# Help adb wait-for-device sync properly when the device begins to reconnect.
         # Step 3: Run adb wait-for-device command to ensure the device is back online
         subprocess.run(["adb", "wait-for-device"])
         print("Device is back online.")  # Inform the user
@@ -82,6 +87,16 @@ def adb_reboot_simple(times):
             capture_output=True,  # Capture output of the command
             text=True  # Get output as a string (instead of bytes)
         )
+# 👉 subprocess.run([...])
+# This is a Python function that runs the command provided as a list of strings. It executes the command like it would in the terminal.
+# 👉 ["adb", "shell", "getprop", "sys.boot_completed"]
+# This is the command you are running:
+# adb: The Android Debug Bridge tool used to communicate with the Android device.
+# shell: Tells ADB to run the following command inside the device’s shell (as if you are using a terminal on the Android device).
+# getprop: A shell command on Android devices that retrieves system properties.
+# sys.boot_completed: A specific Android system property that indicates if the device has finished booting.
+# It returns "1" if boot is completed.
+# Returns nothing or "0" if still booting.
 
         # Step 5: Check if the output contains '1' (indicating boot is complete)
         if "1" in result.stdout:  # If '1' is found anywhere in the output
