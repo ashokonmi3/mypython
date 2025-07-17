@@ -28,14 +28,14 @@ jobs:
 
       # Step 2: Set up the Python environment for the job
       - name: Set up Python
-        id: python  # Assigns an ID to the step for referencing.
-        uses: actions/setup-python@v5  # This action sets up Python in the runner.
-        with:
-          python-version: '3.11'  # Specifies the version of Python to be used (Python 3.11 in this case).
+        # id: python  # Assigns an ID to the step for referencing.
+        # uses: actions/setup-python@v5  # This action sets up Python in the runner.
+        # with:
+        #   python-version: '3.11'  # Specifies the version of Python to be used (Python 3.11 in this case).
 
       # Step 3: Install dependencies listed in the 'requirements.txt' file
       - name: Install dependencies
-        run: pip install -r requirements.txt  # This command installs the dependencies required for your project.
+        # run: pip install -r requirements.txt  # This command installs the dependencies required for your project.
 
   # Job for Build
   build:

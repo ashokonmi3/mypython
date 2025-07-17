@@ -1,0 +1,214 @@
+name: MAX QA CI Pipeline  # Name of the workflow shown in GitHub Actions
+
+on:
+  schedule:              # Schedule to run the pipeline automatically
+    - cron: '30 4 * * *'   # Run every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'  # Run every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:      # Allow manual triggering from GitHub UI
+
+jobs:
+  build:              #  Build the application
+  unit-tests:         #  Run unit tests
+  functional-tests:   #  Run functional tests
+  integration-tests:  #  Run integration tests
+  regression-tests:   #  Run regression tests
+  deploy-to-staging:  #  Deploy to staging
+
+# ===================================
+# Add runs on for all 
+name: Basic CI Pipeline  # Name of the workflow shown in GitHub Actions
+
+on:
+  schedule:              # Schedule to run the pipeline automatically
+    - cron: '30 4 * * *'   # Run every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'  # Run every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:      # Allow manual triggering from GitHub UI
+
+jobs:
+  
+  build:                  # Build the application
+    runs-on: ubuntu-latest
+
+  unit-tests:             # Run unit tests
+    runs-on: ubuntu-latest
+
+  functional-tests:       # Run functional tests
+    runs-on: ubuntu-latest
+
+  integration-tests:      # Run integration tests
+    runs-on: ubuntu-latest
+
+  regression-tests:       # Run regression tests
+    runs-on: ubuntu-latest
+
+  deploy-to-staging:      # Deploy to staging
+    runs-on: ubuntu-latest
+# =================================
+# Add steps 
+name: Basic CI Pipeline  # Name of the workflow shown in GitHub Actions
+
+on:  # Triggers section to define when this workflow runs
+  schedule:  # Run the pipeline automatically based on time
+    - cron: '30 4 * * *'     # Run every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'    # Run every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:         # Allow manual triggering from GitHub UI
+
+jobs:  # Define all the jobs (tasks) that will run in this pipeline
+
+  build:  # Job 2: Build the application
+    runs-on: ubuntu-latest  # Run on latest Ubuntu runner
+    steps:
+      - name: Checkout code , install dependency
+      - name: Build application  # Step: Build code into deployable format (APK, binary, etc.)
+
+  unit-tests:  # Job 3: Run unit tests to check individual functions/modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Unit Tests  # Step: Execute unit tests (typically fastest)
+
+  functional-tests:  # Job 4: Run functional tests to validate business workflows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Functional Tests  # Step: Execute end-to-end functional scenarios
+
+  integration-tests:  # Job 5: Run integration tests to verify component interactions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Integration Tests  # Step: Test how modules work together (e.g., UI + API)
+
+  regression-tests:  # Job 6: Run regression tests to confirm nothing broke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Regression Tests  # Step: Full test suite to catch old bugs resurfacing
+
+  deploy-to-staging:  # Job 7: Deploy to a staging environment after tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Staging  # Step: Simulate or perform deployment to staging server
+
+
+# ==================
+# Add needs for 
+name: Basic CI Pipeline  # Name of the pipeline (appears in the GitHub Actions UI)
+
+on:  # Triggers to start the workflow
+  schedule:  # Schedule the pipeline to run automatically
+    - cron: '30 4 * * *'     # Runs every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'    # Runs every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:  # Allows manual triggering of the workflow via GitHub UI
+
+jobs:  # Start defining all jobs in this workflow
+  
+  build:  # Job: Build the application
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    steps:
+      - name: Checkout code , install dependency 
+      - name: Build application  # Step: Compile or package the application code
+
+  unit-tests:  # Job: Run unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Unit Tests  # Step: Execute unit tests (typically fastest)
+
+  
+  functional-tests:
+    runs-on: ubuntu-latest
+    needs: [build, unit-tests]
+    steps:
+     - name: Checkout code , install dependency
+     - name: Run Functional Tests  # Step: Execute end-to-end functional scenarios
+
+  
+  integration-tests:
+    runs-on: ubuntu-latest
+    needs: [build, unit-tests]
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Integration Tests  # Step: Test how modules work together (e.g., UI + API)
+
+
+  regression-tests:
+    runs-on: ubuntu-latest
+    needs: [build, unit-tests]
+    steps:
+      - name: Checkout code , install dependency
+      - name: Run Regression Tests  # Step: Full test suite to catch old bugs resurfacing
+
+# =====================
+
+
+# ==========================
+# Added run 
+
+name: QA CI Pipeline  # Name of the workflow shown in GitHub Actions UI
+
+on:  # Start of trigger conditions
+  schedule:  # This section defines scheduled runs (using cron syntax)
+    - cron: '30 4 * * *'  # Run every day at 4:30 AM UTC (10:00 AM IST)
+    - cron: '30 14 * * *'  # Run every day at 2:30 PM UTC (8:00 PM IST)
+  workflow_dispatch:  # Allow the workflow to be manually triggered from the GitHub UI
+
+jobs:  # Define all the jobs in the workflow
+  
+  build:  # Job 2: Build the application
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    steps:  # Steps in the build job
+      - name: Checkout code , install dependency
+      - name: Build application  # Step 1: Simulate or run actual build process
+        run: |  # Run a multi-line shell script
+          echo "Building Android, iOS, TV apps..."  # Print a message to the console
+          mkdir build-output  # Create a folder to store build output
+          echo "Build complete" > build-output/app.txt  # Create a dummy build file
+# ------------------------
+
+  unit-tests:  # Job 3: Run unit tests
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+
+    steps:  # Steps to run unit tests
+      - name: Checkout code , install dependency
+      - name: Run Unit Tests  # Step 1: Run test scripts inside the tests/unit folder
+        run: pytest tests/unit  # Use pytest to run unit tests
+# ------------------------
+  functional-tests:  # Job 4: Run functional tests
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: [build,unit test]  # This job depends on both setup and build jobs
+
+    steps:  # Steps to run functional tests
+      - name: Checkout code , install dependency
+      - name: Run Functional Tests  # Step 1: Execute functional test suite
+        run: pytest tests/functional  # Run functional tests using pytest
+# ------------------------
+
+  integration-tests:  # Job 5: Run integration tests
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: [unit test, build]  # Wait for both setup and build jobs
+
+    steps:  # Steps to run integration tests
+      - name: Checkout code , install dependency
+      - name: Run Integration Tests  # Step 1: Execute integration test cases
+        run: pytest tests/integration  # Run integration tests using pytest
+# ------------------------
+
+  regression-tests:  # Job 6: Run regression tests
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: [unit test, build]  # Wait for setup and build jobs to finish
+
+    steps:  # Steps to run regression tests
+            - name: Checkout code , install dependency
+            - name: Run Regression Tests  # Step 1: Execute full regression test suite
+            - run: pytest tests/regression  # Run regression tests using pytest
+# ------------------------
+
+  deploy-to-staging:  # Job 7: Deploy to staging environment
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    needs: [build, unit-tests, functional-tests, integration-tests, regression-tests]  # Wait for all test jobs to finish
+
+    steps:  # Steps to deploy to staging
+      - name: Deploy to Staging  # Step 1: Simulate deployment (replace with actual commands)
+        run: echo "Deploying to staging environment..."  # Print deployment message (placeholder)
+# ------------------------

@@ -18,3 +18,17 @@ so he will get the early feed back
 
 provide me program for this with approch to follow , detailed comments for each line , for the program , with the traces of each iteration , complexity at the end 
 
+
+Tell me about your self --> no need to mention manual tester u are lead of devops and automation team 
+Explain your automation framework (complete system ci tool, devices, test framework python based)
+Explain me a operational challange you faced how u resolved
+What are best practices you followed for CI-CD performance optimization, stability, speed
+Explain your ci pipeline
+How you deal with flackiness of test 
+what happns when a test fails in ci
+What you do when a test fails
+How you debug the ci failure
+What stability testing you did
+How you can improve ci feedback loop
+where can be a deployment be fragile and how you resolve it
+
