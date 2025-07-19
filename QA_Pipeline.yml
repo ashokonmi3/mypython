@@ -1,4 +1,4 @@
-name: MAX QA CI Pipeline  # Name of the workflow shown in GitHub Actions
+name: MAX QA CI Workflow  # Name of the workflow shown in GitHub Actions
 
 on:
   schedule:              # Schedule to run the pipeline automatically
@@ -16,6 +16,7 @@ jobs:
 
 # ===================================
 # Add runs on for all 
+# and checkout code and dependency installation
 name: Basic CI Pipeline  # Name of the workflow shown in GitHub Actions
 
 on:
@@ -27,24 +28,36 @@ on:
 jobs:
   
   build:                  # Build the application
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Run on latest Ubuntu runner
+    steps:
+      - name: Checkout code , install dependency
 
   unit-tests:             # Run unit tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Run on latest Ubuntu runner
+    steps:
+      - name: Checkout code , install dependency
 
   functional-tests:       # Run functional tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Run on latest Ubuntu runner
+    steps:
+      - name: Checkout code , install dependency
 
   integration-tests:      # Run integration tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Run on latest Ubuntu runner
+    steps:
+      - name: Checkout code , install dependency
 
   regression-tests:       # Run regression tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Run on latest Ubuntu runner
+    steps:
+      - name: Checkout code , install dependency
 
   deploy-to-staging:      # Deploy to staging
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Run on latest Ubuntu runner
+    steps:
+      - name: deploy to staging
 # =================================
-# Add steps 
+# Add testing and build steps 
 name: Basic CI Pipeline  # Name of the workflow shown in GitHub Actions
 
 on:  # Triggers section to define when this workflow runs

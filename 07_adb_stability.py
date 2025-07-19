@@ -2,13 +2,20 @@
 # “My approach to detect Android device stability would be structured in three steps:”
 
 # 1️⃣ Check if the device is connected
-# “First, I will run adb get-state to check if the device is connected and recognized by ADB. If the device is not connected, I stop and report that no device is available.”
+# “First, I will run adb get-state to check
+#  if the device is connected and recognized by ADB. 
+# If the device is not connected, I stop and report that no device is available.”
 
 # 2️⃣ Check if the device has completed booting
-# “If the device is connected, I will run adb shell getprop sys.boot_completed. This will tell me if the device has finished booting. A value of 1 means boot is complete, and 0 means it is still booting or stuck.”
+# “If the device is connected, I will run adb shell 
+#  sys.boot_completed. This will tell me if the device has finished booting.
+#  A value of 1 means boot is complete, and 0 means it is still booting or stuck.”
 
 # 3️⃣ Check if the device is responsive
-# “Finally, I will run a simple command like adb shell uptime to confirm that the device responds to shell commands. If I get valid output, the device looks stable. If not, I report that the device might be unresponsive or unstable.”
+# “Finally, I will run a simple command like adb shell 
+# uptime to confirm that the device responds to shell commands. 
+# If I get valid output, the device looks stable. 
+# If not, I report that the device might be unresponsive or unstable.”
 
 # 4️⃣ Summarize the result
 # “At each step, I print clear messages about the device’s state — whether it’s connected, booted, and responsive.”
@@ -31,12 +38,13 @@ def check_android_stability():
     """
 
     # Step 1: Check if the device is connected to ADB
-    # We use 'adb get-state' which tells us if the device is connected (should return 'device')
+    # We use 'adb get-state' which tells us if the device is connected 
+    # (should return 'device')
     result = subprocess.run(
         ["adb", "get-state"],       # The command we want to run
         capture_output=True,        # This means we want to capture its output so we can read it
         text=True                   # This means the output will be a string, not bytes
-    )
+    ) comment likho
 
     # We get the output of the command and remove extra spaces or newlines
     state = result.stdout.strip()
@@ -69,7 +77,8 @@ def check_android_stability():
     print("✅ Device boot completed successfully.")
 
     # Step 3: Check if the device responds to a basic shell command
-    # We'll run 'adb shell uptime' — it prints system uptime (how long the device has been running)
+    # We'll run 'adb shell uptime' — it prints system uptime 
+    # (how long the device has been running)
     result = subprocess.run(
         ["adb", "shell", "uptime"],
         capture_output=True,
